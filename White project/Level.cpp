@@ -7,11 +7,12 @@ Level::Level(Locations location,int* currentLevel, sf::RenderWindow* target)
 {
     this->target = target;
     this->location = location;
+    tileSize = 50;
 
     map = new Map(location, currentLevel, target);
-    map->generateMap(22, 18, 50);
+    map->generateMap(22, 18, tileSize);
 
-
+    
 }
 
 Level::~Level() {
@@ -26,11 +27,15 @@ void Level::renderLevel()
     }
 
     // Clear the window
-    target->clear();
-
+    
     // Render the map
     map->render();
+    player->render();
 
-    // Display the rendered frame
-    target->display();
+
+}
+
+//Other
+void Level::setPlayer(Player* player) {
+    this->player = player;
 }

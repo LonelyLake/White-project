@@ -2,7 +2,7 @@
 
 #include "Level.h"
 #include "Map.h"
-
+#include "Player.h"
 
 
 enum class GameModes
@@ -23,8 +23,10 @@ enum class Locations
 	CASTLE_PRINCESS_ROOM
 };
 
+class Player;
 class Level;
 enum class Locations;
+
 
 class Game
 {
@@ -38,11 +40,13 @@ public:
 	//Game objects
 	Locations location;
 
+	Player* player;
+	Texture playerTexture;
+	Sprite playerSprite;
+
 	//Game logic
 	int currentLevel;
 	Level* level;
-
-	//Map
 
 
 	//Game mode

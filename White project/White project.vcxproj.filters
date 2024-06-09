@@ -33,6 +33,9 @@
     <ClCompile Include="Map.cpp">
       <Filter>Game logic</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Game logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -45,6 +48,9 @@
       <Filter>Game logic</Filter>
     </ClInclude>
     <ClInclude Include="Map.h">
+      <Filter>Game logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
       <Filter>Game logic</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,9 +1,10 @@
 #include "stdafx.h"
 #include "Map.h"
-#include "Game.h"
+
 
 Map::Map(Locations location, int* currentLevel, RenderWindow *target)
 {
+	//Map
 	this->location = location;
 	this->currentLevel = currentLevel;
 	this->target = target;
@@ -23,6 +24,7 @@ Map::Map(Locations location, int* currentLevel, RenderWindow *target)
 	lockTexture.loadFromFile("Images/Map/Tiles/door_closed.png");
 	lockSprite.setTexture(lockTexture);
 	lockSprite.setScale(1.5f, 1.5f);
+
 }
 
 Map::~Map()
@@ -129,7 +131,6 @@ void Map::generateMap(int width, int height, int tileSize)
 void Map::render() {
 	// Clear the window
 
-	target->clear();
 	
 	for (int i = 0; i < height; i++) {
 		for (int j = 0; j < width; j++) {
@@ -142,6 +143,5 @@ void Map::render() {
 	target->draw(lockSprite);
 
 	// Display the rendered frame
-	target->display();
 	//Test
 }

@@ -1,5 +1,7 @@
 #pragma once
+
 #include "Game.h"
+#include "Player.h"
 
 enum class Locations;
 
@@ -15,14 +17,7 @@ private:
 	int width;
 	int tileSize;
 
-	//Tiles coordinates
-	int startX;
-	int startY;
-	int endX;
-	int endY;
-
-	int secretX;
-	int secretY;
+	
 
 	//Map
 	vector<vector<Sprite>> tiles;
@@ -41,6 +36,15 @@ private:
 	Texture lockTexture;
 
 public:
+	//Tiles coordinates
+	int startX;
+	int startY;
+	int endX;
+	int endY;
+
+	int secretX;
+	int secretY;
+
 	Map(Locations location, int* currentLevel, RenderWindow* target);
 	~Map();
 

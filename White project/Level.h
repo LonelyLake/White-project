@@ -7,6 +7,7 @@
 class Player;
 enum class Locations;
 class Map;
+class Tile;
 
 
 class Level
@@ -19,6 +20,8 @@ public:
 	Map* map;
 
 	int tileSize;
+
+	int newXTile;
 
 	Texture backgroundTexture;
 	Sprite backgroundSprite;

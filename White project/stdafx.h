@@ -9,6 +9,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cmath>
+#include <algorithm>
 
 using namespace sf;
 using namespace std;
@@ -17,3 +19,7 @@ class stdafx
 {
 };
 
+template <typename T>
+constexpr T clamp(T value, T min, T max) {
+    return std::max(min, std::min(value, max));
+}

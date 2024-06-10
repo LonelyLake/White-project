@@ -36,6 +36,9 @@
     <ClCompile Include="Player.cpp">
       <Filter>Game logic</Filter>
     </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -52,6 +55,9 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Game logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

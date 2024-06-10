@@ -2,9 +2,11 @@
 
 #include "Game.h"
 #include "Player.h"
+#include "Tile.h"
 
 enum class Locations;
 class Player;
+class Tile;
 
 class Map
 {
@@ -18,12 +20,14 @@ public:
 
 	int height;
 	int width;
-	int tileSize;
+
+	float tileSize;
+	float tileScale;
 
 	
 
 	//Map
-	vector<vector<Sprite>> tiles;
+	vector<vector<Tile>> tiles;
 
 	//Sprites
 	Sprite wallSprite;

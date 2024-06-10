@@ -10,21 +10,23 @@ Map::Map(Locations location, int* currentLevel, Player* player, RenderWindow *ta
 	this->player = player;
 	this->target = target;
 
+	tileScale = 12.f;
+
 	wallTexture.loadFromFile("Images/Map/Tiles/wall_2.png");
 	wallSprite.setTexture(wallTexture);
-	wallSprite.setScale(3.f, 3.f);
+	wallSprite.setScale(tileScale, tileScale);
 
 	emptyTexture.loadFromFile("Images/Map/Tiles/Floor.png", IntRect(0, 0, 20, 20));
 	emptySprite.setTexture(emptyTexture);
-	emptySprite.setScale(3.f, 3.f);
+	emptySprite.setScale(tileScale, tileScale);
 
 	secretTexture.loadFromFile("Images/Map/Items/Golden Key.png");
 	secretSprite.setTexture(secretTexture);
-	secretSprite.setScale(1.2f, 1.2f);
+	secretSprite.setScale(2, 2);
 
 	lockTexture.loadFromFile("Images/Map/Tiles/door_closed.png");
 	lockSprite.setTexture(lockTexture);
-	lockSprite.setScale(1.5f, 1.5f);
+	lockSprite.setScale(2, 2);
 
 }
 
@@ -41,7 +43,7 @@ void Map::generateMap(int width, int height, int tileSize)
 	tiles.clear();
 	tiles.resize(height);
 
-	startY = 0;
+	startY = height - 2;
 
 	for (int i = 0; i < height; i++) {
 		if (i < tiles.size()) {
@@ -54,7 +56,8 @@ void Map::generateMap(int width, int height, int tileSize)
 
 		for (int j = 0; j < width; ++j) {
 			// Initialize each tile here...
-			tiles[i][j] = wallSprite;
+			tiles[i][j].sprite = wallSprite;
+			tiles[i][j].wall = true;
 		}
 	}
 
@@ -64,83 +67,98 @@ void Map::generateMap(int width, int height, int tileSize)
 	int linia3X{};
 
 	//tworzenie drogi glownej
-	linia1X = rand() % (height - 1);
-	startX = linia1X;
+	{
+		linia1X = rand() % (height - 1) + 1;
+		startX = linia1X;
 
-	for (int i = 0; i < height; i++) {
-		tiles[i][linia1X] = emptySprite;
+		for (int i = 0; i < height; i++) {
+			tiles[i][linia1X].sprite = emptySprite;
+			tiles[i][linia1X].wall = false;
+		}
+
+		//koncowa x
+		endX = linia1X;
+
+		//tworzenie drog bocznych
+		int szerokosc_linii2{};
+		linia2Y = rand() % (height - 2 - 2) + 2;
+		if (linia1X <= width / 2) {
+			for (int i = linia1X; i < width; i++) {
+				tiles[linia2Y][i].sprite = emptySprite;
+				tiles[linia2Y][i].wall = false;
+				szerokosc_linii2++;
+			}
+
+			//tworzenie dodatkowych galedzi
+			linia3X = rand() % (width - linia1X - 5) + linia1X + 4;
+			if (linia2Y <= height / 2) {
+				for (int i = linia2Y; i < height - 2; i++) {
+					tiles[i][linia3X].sprite = emptySprite;
+					tiles[i][linia3X].wall = false;
+					secretY = height - 3;
+				}
+			}
+			if (linia2Y > height / 2) {
+				for (int i = 2; i < linia2Y; i++) {
+					tiles[i][linia3X].sprite = emptySprite;
+					tiles[i][linia3X].wall = false;
+					secretY = 2;
+				}
+			}
+		}
+		else if (linia1X > width / 2) {
+			for (int i = 0; i < linia1X; i++) {
+				tiles[linia2Y][i].sprite = emptySprite;
+				tiles[linia2Y][i].wall = false;
+			}
+
+			//tworzenie dodatkowych galedzi
+
+			linia3X = rand() % (linia1X - 6 - 0) + 1;
+			if (linia2Y <= height / 2) {
+				for (int i = linia2Y; i < height - 2; i++) {
+					tiles[i][linia3X].sprite = emptySprite;
+					tiles[i][linia3X].wall = false;
+					secretY = height - 3;
+				}
+			}
+			if (linia2Y > height / 2) {
+				for (int i = 2; i < linia2Y; i++) {
+					tiles[i][linia3X].sprite = emptySprite;
+					tiles[i][linia3X].wall = false;
+					secretY = 2;
+				}
+			}
+		}
+
+
+		//Secret and lock
+		secretX = linia3X;
+
+		secretSprite.setPosition(secretX * tileSize, secretY * tileSize);
+		//tiles[secretY][secretX] = secret_icon;
+
+		//koniec
+		//tiles[endY][endX] = lock_icon;
+		lockSprite.setPosition(endX * tileSize, 0);
+
+		player->setPosition(startX * tileSize, startY * tileSize);
+
+		//TEST
+
+		player->positionXTile = startX;
+		player->positionYTile = startY;
 	}
-
-	//koncowa x
-	endX = linia1X;
-
-	//tworzenie drog bocznych
-	int szerokosc_linii2{};
-	linia2Y = rand() % (height - 2 - 2) + 2;
-	if (linia1X <= width / 2) {
-		for (int i = linia1X; i < width; i++) {
-			tiles[linia2Y][i] = emptySprite;
-			szerokosc_linii2++;
-		}
-
-		//tworzenie dodatkowych galedzi
-		linia3X = rand() % (width - linia1X - 4) + linia1X + 4;
-		if (linia2Y <= height / 2) {
-			for (int i = linia2Y; i < height - 2; i++) {
-				tiles[i][linia3X] = emptySprite;
-				secretY = height - 3;
-			}
-		}
-		if (linia2Y > height / 2) {
-			for (int i = 2; i < linia2Y; i++) {
-				tiles[i][linia3X] = emptySprite;
-				secretY = 2;
-			}
-		}
-	}
-	else if (linia1X > width / 2) {
-		for (int i = 0; i < linia1X; i++) {
-			tiles[linia2Y][i] = emptySprite;
-		}
-
-		//tworzenie dodatkowych galedzi
-
-		linia3X = rand() % (linia1X - 4 - 0);
-		if (linia2Y <= height / 2) {
-			for (int i = linia2Y; i < height - 2; i++) {
-				tiles[i][linia3X] = emptySprite;
-				secretY = height - 3;
-			}
-		}
-		if (linia2Y > height / 2) {
-			for (int i = 2; i < linia2Y; i++) {
-				tiles[i][linia3X] = emptySprite;
-				secretY = 2;
-			}
-		}
-	}
-
-	//Secret and lock
-	secretX = linia3X;
-
-	secretSprite.setPosition((1 + secretX) * tileSize, (1 + secretY) * tileSize);
-	//tiles[secretY][secretX] = secret_icon;
-
-	//koniec
-	//tiles[endY][endX] = lock_icon;
-	lockSprite.setPosition((1 + endX) * tileSize, 1);
-
-	player->setPosition((startX + 1)* tileSize, (startY + 1) * tileSize);
 }
 
 void Map::render() {
 	// Clear the window
 
 	
-	for (int i = 0; i < height; i++) {
-		for (int j = 0; j < width; j++) {
-			tiles[i][j].setPosition((1+ j) * tileSize, (1 + i) * tileSize);
-			target->draw(tiles[i][j]);
+	for (int i = 1; i < height - 1; i++) {
+		for (int j = 1; j < width - 1; j++) {
+			tiles[i][j].sprite.setPosition(j * tileSize, i * tileSize);
+			target->draw(tiles[i][j].sprite);
 		}
 	}
 

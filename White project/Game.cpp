@@ -5,7 +5,7 @@
 void Game::initVariables()
 {
 
-	playerTexture.loadFromFile("Images/Player.png", IntRect(20, 0, 64, 90));
+	playerTexture.loadFromFile("Images/Player.png", IntRect(20, 20, 45, 80));
 
 	player = new Player("Knight", playerTexture, window);
 
@@ -69,6 +69,7 @@ void Game::update()
 {
 	pollEvents();
 
+	player->update();
 	level->update();
 }
 

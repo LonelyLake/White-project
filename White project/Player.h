@@ -27,9 +27,16 @@ public:
 	int health;
 	int damage;
 
+	float velocity;
+
 	//Position of the player on the map.
-	int positionX;
-	int positionY;
+	float positionX;
+	float positionY;
+
+	int positionXTile;
+	int positionYTile;
+
+	View view;
 
 	Controls controls;
 

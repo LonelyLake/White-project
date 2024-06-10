@@ -4,11 +4,14 @@
 #include "Player.h"
 
 enum class Locations;
+class Player;
 
 class Map
 {
-private:
+public:
 	RenderWindow* target;
+
+	Player* player;
 
 	Locations location;
 	int* currentLevel;
@@ -45,7 +48,7 @@ public:
 	int secretX;
 	int secretY;
 
-	Map(Locations location, int* currentLevel, RenderWindow* target);
+	Map(Locations location, int* currentLevel, Player* player, RenderWindow* target);
 	~Map();
 
 	//Functions

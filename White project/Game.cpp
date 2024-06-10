@@ -5,16 +5,18 @@
 void Game::initVariables()
 {
 
-	//Game variables
-	location = Locations::CASTLE_HALL;
-	
-	playerTexture.loadFromFile("Images/Player.png", IntRect(0, 0, 64, 90));
+	playerTexture.loadFromFile("Images/Player.png", IntRect(20, 0, 64, 90));
 
 	player = new Player("Knight", playerTexture, window);
 
+	//Game variables
+	location = Locations::CASTLE_HALL;
+	
+	
+
 	//Level variables
 	currentLevel = 1;
-	level = new Level(location, &currentLevel, window);
+	level = new Level(location, &currentLevel, player, window);
 
 	//set player to level
 	level->setPlayer(player);
@@ -67,8 +69,7 @@ void Game::update()
 {
 	pollEvents();
 
-	player->update();
-
+	level->update();
 }
 
 void Game::render()

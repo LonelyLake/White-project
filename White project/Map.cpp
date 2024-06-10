@@ -2,11 +2,12 @@
 #include "Map.h"
 
 
-Map::Map(Locations location, int* currentLevel, RenderWindow *target)
+Map::Map(Locations location, int* currentLevel, Player* player, RenderWindow *target)
 {
 	//Map
 	this->location = location;
 	this->currentLevel = currentLevel;
+	this->player = player;
 	this->target = target;
 
 	wallTexture.loadFromFile("Images/Map/Tiles/wall_2.png");
@@ -39,6 +40,8 @@ void Map::generateMap(int width, int height, int tileSize)
 
 	tiles.clear();
 	tiles.resize(height);
+
+	startY = 0;
 
 	for (int i = 0; i < height; i++) {
 		if (i < tiles.size()) {
@@ -126,6 +129,8 @@ void Map::generateMap(int width, int height, int tileSize)
 	//koniec
 	//tiles[endY][endX] = lock_icon;
 	lockSprite.setPosition((1 + endX) * tileSize, 1);
+
+	player->setPosition((startX + 1)* tileSize, (startY + 1) * tileSize);
 }
 
 void Map::render() {

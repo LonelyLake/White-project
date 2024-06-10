@@ -2,11 +2,14 @@
 
 #include "Game.h"
 #include "Level.h"
+#include "Map.h"
 
 class Level;
+class Map;
 
 enum class Controls
 {
+	IDLE,
 	UP,
 	DOWN,
 	LEFT,
@@ -17,7 +20,7 @@ enum class Controls
 class Player
 {
 
-private:
+public:
 	string name;
 
 	//Stats
@@ -40,6 +43,7 @@ public:
 
 	//Level*
 	Level* level;
+	Map* map;
 
 	Player(string name, Texture playerTexture, RenderWindow* window);
 

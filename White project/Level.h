@@ -25,8 +25,12 @@ public:
 
 	Player* player;
 
-	Level(Locations location, int *currentLevel, RenderWindow* target);
+	Level(Locations location, int *currentLevel, Player* player, RenderWindow* target);
 	virtual ~Level();
+
+	void update();
+
+	void input();
 	void renderLevel();
 	
 	//Other

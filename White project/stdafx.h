@@ -28,8 +28,10 @@ class Player;
 enum class Locations;
 class Map;
 class Tile;
+
 class Item;
 class Coin;
+class Heart;
 
 class Level;
 

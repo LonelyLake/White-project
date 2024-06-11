@@ -6,7 +6,7 @@ void Game::initVariables()
 {
 	
 	//Init player
-	playerTexture.loadFromFile("Images/Player.png", IntRect(20, 20, 45, 80));
+	playerTexture.loadFromFile("Images/AnimationSheet_Character.png", IntRect(0, 0, 32, 32));
 	player = new Player("Knight", playerTexture, window);
 
 	//Init gamemode

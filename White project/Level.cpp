@@ -20,7 +20,8 @@ Level::Level(Locations location,int* currentLevel, Player* player, sf::RenderWin
     coinValue = 10;
 
     //Add map items for level
-    addMapItems(10);
+    itemAmount = 2;
+    addMapItems(itemAmount);
     //Generate items on map
 
     cout << &mapItems << endl;
@@ -38,7 +39,7 @@ void Level::update(float deltaTime) {
     float playerX = player->sprite.getPosition().x;
     float playerY = player->sprite.getPosition().y;
 
-    input();
+    input(deltaTime);
 
     //Move player
     sf::FloatRect playerBounds(playerX, playerY, player->sprite.getGlobalBounds().width, player->sprite.getGlobalBounds().height);
@@ -110,10 +111,12 @@ void Level::update(float deltaTime) {
     player->positionY = playerBounds.top;
     player->positionXTile = static_cast<int>(playerBounds.left) / map->tileSize;
     player->positionYTile = static_cast<int>(playerBounds.top) / map->tileSize;
+
+    updatePlayerAnimation(deltaTime);
 }
 
 //Player controls
-void Level::input() {
+void Level::input(float deltaTime) {
 	player->controls = Controls::IDLE;
 
 	if (Keyboard::isKeyPressed(Keyboard::W))
@@ -166,6 +169,12 @@ void Level::addMapItems(int itemAmount) {
 
     mapItems[0] = goldenCoin;
 
+    //Heart
+    heartTexture.loadFromFile("Images/Level/Items/Heart.png");
+    Heart* heart = new Heart(heartTexture, 1);
+    heart->sprite.setScale(1, 1);
+
+    mapItems[1] = goldenCoin;
 
     // mapItems[0] = goldenCoin;
 	////Key
@@ -173,4 +182,29 @@ void Level::addMapItems(int itemAmount) {
 	//keyTexture.loadFromFile("Images/Level/Items/Golden Key.png");
 	//mapItems[1] = new Key(keyTexture);
 
+}
+
+void Level::updatePlayerAnimation(float deltaTime) {
+            static int frameIndex = 0;
+            static float animationTimer = 0.f;
+            const float animationSpeed = 0.1f; // Fixed animation speed
+
+            animationTimer += 0.01f; // Fixed time increment
+            if (animationTimer >= animationSpeed) {
+                frameIndex = (frameIndex + 1) % 8; // Assuming 3 frames in the animation
+                animationTimer = 0.0f;
+            }
+
+            int startX = 0; // Starting x-coordinate of the animation frames
+            int startY = 160; // Starting y-coordinate of the animation frames (4th line)
+            int frameWidth = 32; // Width of each animation frame
+            int frameHeight = 32; // Height of each animation frame
+
+            player->texture.loadFromFile("Images/AnimationSheet_Character.png", IntRect(startX + frameIndex * frameWidth, startY, frameWidth, frameHeight));
+            player->sprite.setTexture(player->texture);
+            player->sprite.setScale(2.f, 2.f);
+        
+        //...
+
+        
 }

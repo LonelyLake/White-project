@@ -176,7 +176,7 @@ void Map::generateItems(vector <Item*> mapItems)
 				// If the tile is not a wall and it does not have an item
 
 				if (tiles[i][j].wall == false && tiles[i][j].hasItem == false && willGenerateItem) {
-					int randomID = 0; // Generate a random index
+					int randomID = rand() % mapItems.size(); // Generate a random index
 					items.push_back(new Item(*mapItems[randomID]));
 					items.back()->isOnMap = true;
 

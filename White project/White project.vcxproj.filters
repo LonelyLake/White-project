@@ -22,6 +22,9 @@
     <Filter Include="Game logic\Map">
       <UniqueIdentifier>{cdc1795a-3784-473a-81de-1d8a66bfebbe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game logic\Items\Misc">
+      <UniqueIdentifier>{8f8ecf80-67b5-4b2b-b944-09b4184617ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -42,14 +45,17 @@
     <ClCompile Include="Item.cpp">
       <Filter>Game logic\Items</Filter>
     </ClCompile>
-    <ClCompile Include="Coin.cpp">
-      <Filter>Game logic\Items</Filter>
-    </ClCompile>
     <ClCompile Include="Tile.cpp">
       <Filter>Game logic\Map</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
       <Filter>Game logic\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Coin.cpp">
+      <Filter>Game logic\Items\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Heart.cpp">
+      <Filter>Game logic\Items\Misc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -68,14 +74,17 @@
     <ClInclude Include="Item.h">
       <Filter>Game logic\Items</Filter>
     </ClInclude>
-    <ClInclude Include="Coin.h">
-      <Filter>Game logic\Items</Filter>
-    </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>Game logic\Map</Filter>
     </ClInclude>
     <ClInclude Include="Map.h">
       <Filter>Game logic\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.h">
+      <Filter>Game logic\Items\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Heart.h">
+      <Filter>Game logic\Items\Misc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

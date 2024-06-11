@@ -4,6 +4,7 @@
 #include "Map.h"
 #include "Item.h"
 #include "Coin.h"
+#include "Heart.h"
 #include "Player.h"
 
 
@@ -32,21 +33,25 @@ public:
 	int newXTile;
 
 	//Items
+	int itemAmount;
 	vector <Item*> mapItems;
 
 	unsigned coinValue;
 	Texture coinTexture;
+	Texture heartTexture;
 
-	Level(Locations location, int *currentLevel, Player* player, RenderWindow* target);
+	Level(Locations location, int* currentLevel, Player* player, RenderWindow* target);
 	virtual ~Level();
 
 	void update(float deltaTime);
 
-	void input();
+	void input(float deltaTime);
 	void renderLevel();
-	
+
 	//Other
 	void setPlayer(Player* player);
 	void addMapItems(int itemAmount);
+
+	void updatePlayerAnimation(float deltaTime);
 };
 

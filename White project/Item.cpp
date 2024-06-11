@@ -9,7 +9,6 @@ Item::Item(Texture texture)
     this->texture = texture;
     this->sprite = Sprite(texture);
     this->isOnMap = false;
-    this->value = 0;
 	sprite.setTexture(texture);
 	isOnMap = false;
 }

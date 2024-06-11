@@ -20,6 +20,7 @@ Player::Player(string name, Texture playerTexture, RenderWindow* window)
 
 	// Initialize the view with the window's size
 	view.setSize(window->getSize().x, window->getSize().y);
+	//TEst view.setSize(window->getSize().x * 8, window->getSize().y * 8);
 
 	view.setCenter(positionX, positionY);
 }
@@ -32,6 +33,7 @@ void Player::update() {
 
 	// Update the view's center
 	view.setCenter(positionX, positionY);
+	
 }
 
 void Player::render() {

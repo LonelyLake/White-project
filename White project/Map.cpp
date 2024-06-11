@@ -22,11 +22,11 @@ Map::Map(Locations location, int* currentLevel, Player* player, RenderWindow *ta
 
 	secretTexture.loadFromFile("Images/Map/Items/Golden Key.png");
 	secretSprite.setTexture(secretTexture);
-	secretSprite.setScale(2, 2);
+	secretSprite.setScale(5, 5);
 
 	lockTexture.loadFromFile("Images/Map/Tiles/door_closed.png");
 	lockSprite.setTexture(lockTexture);
-	lockSprite.setScale(2, 2);
+	lockSprite.setScale(5, 5);
 
 }
 
@@ -68,7 +68,7 @@ void Map::generateMap(int width, int height, int tileSize)
 
 	//tworzenie drogi glownej
 	{
-		linia1X = rand() % (height - 1) + 1;
+		linia1X = rand() % (height - 2) + 1;
 		startX = linia1X;
 
 		for (int i = 0; i < height; i++) {

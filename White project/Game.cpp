@@ -21,6 +21,9 @@ void Game::initVariables()
 	//set player to level
 	level->setPlayer(player);
 
+	gameMode = GameModes::TRAVEL;
+	pause = false;
+
 	//Create player////////////////////////////////
 	
 }
@@ -58,7 +61,25 @@ void Game::pollEvents() {
 			break;
 		case Event::KeyPressed:
 			if (event.key.code == Keyboard::Escape) {
-				window->close();
+				if (!pause){
+					pause = true;
+				}
+				else {
+					pause = false;
+				}
+				
+				//window->close();
+			}
+
+			if (event.key.code == Keyboard::K) {
+				if (!editorMode) {
+					editorMode = true;
+				}
+				else {
+					editorMode = false;
+				}
+
+				//window->close();
 			}
 			break;
 		}
@@ -69,8 +90,19 @@ void Game::update()
 {
 	pollEvents();
 
-	player->update();
-	level->update();
+	if (!pause) {
+		player->update();
+		level->update();
+	}
+
+	if (editorMode) {
+		player->view.setSize(window->getSize().x * 8, window->getSize().y * 8);
+		player->velocity = 5;
+	}
+	else {
+		player->view.setSize(window->getSize().x, window->getSize().y);
+		player->velocity = 0.7f;
+	}
 }
 
 void Game::render()

@@ -12,7 +12,9 @@ enum class GameModes
 	FIGHT,
 	TRADE,
 	UPGRADE,
-	INVENTORY
+	INVENTORY,
+
+	MENU,
 };
 
 enum class Locations
@@ -38,6 +40,8 @@ public:
 	VideoMode videomode;
 	Event event;
 
+	bool pause;
+
 	//Game objects
 	Locations location;
 
@@ -51,6 +55,10 @@ public:
 
 
 	//Game mode
+	GameModes gameMode;
+
+	//Test
+	bool editorMode;
 
 	//private functions
 	void initVariables();

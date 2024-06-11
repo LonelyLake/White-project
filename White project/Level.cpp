@@ -105,15 +105,15 @@ void Level::input() {
 	{
 		player->controls = Controls::UP;
 	}
-	else if (Keyboard::isKeyPressed(Keyboard::S))
+	if (Keyboard::isKeyPressed(Keyboard::S))
 	{
 		player->controls = Controls::DOWN;
 	}
-	else if (Keyboard::isKeyPressed(Keyboard::A))
+	if (Keyboard::isKeyPressed(Keyboard::A))
 	{
 		player->controls = Controls::LEFT;
 	}
-	else if (Keyboard::isKeyPressed(Keyboard::D))
+	if (Keyboard::isKeyPressed(Keyboard::D))
 	{
 		player->controls = Controls::RIGHT;
 	}

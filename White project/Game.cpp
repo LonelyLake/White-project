@@ -7,7 +7,6 @@ void Game::initVariables()
 	
 	//Init player
 	playerTexture.loadFromFile("Images/Player.png", IntRect(20, 20, 45, 80));
-
 	player = new Player("Knight", playerTexture, window);
 
 	//Init gamemode
@@ -116,7 +115,7 @@ void Game::update()
 	//Set editor mode - TEST!!!!!!!!!!!!!!
 	if (editorMode) {
 		player->view.setSize(window->getSize().x * 8, window->getSize().y * 8);
-		player->velocity = 30.f;
+		player->velocity = 1000.f;
 	}
 	else {
 		player->view.setSize(window->getSize().x, window->getSize().y);

@@ -6,14 +6,25 @@ enum class Locations;
 
 Level::Level(Locations location,int* currentLevel, Player* player, sf::RenderWindow* target)
 {
+    this->currentLevel = currentLevel;
     this->target = target;
     this->player = player;
     this->location = location;
     tileSize = 140;
 
+	//Create map
     map = new Map(location, currentLevel, player, target);
     map->generateMap(30, 30, tileSize);
 
+    //Item info
+    coinValue = 10;
+
+    //Add map items for level
+    addMapItems(10);
+    //Generate items on map
+
+    cout << &mapItems << endl;
+	map->generateItems(mapItems);
     
 }
 
@@ -29,6 +40,7 @@ void Level::update(float deltaTime) {
 
     input();
 
+    //Move player
     sf::FloatRect playerBounds(playerX, playerY, player->sprite.getGlobalBounds().width, player->sprite.getGlobalBounds().height);
 
     switch (player->controls) {
@@ -100,7 +112,7 @@ void Level::update(float deltaTime) {
     player->positionYTile = static_cast<int>(playerBounds.top) / map->tileSize;
 }
 
-
+//Player controls
 void Level::input() {
 	player->controls = Controls::IDLE;
 
@@ -141,4 +153,24 @@ void Level::renderLevel()
 //Other
 void Level::setPlayer(Player* player) {
     this->player = player;
+}
+
+void Level::addMapItems(int itemAmount) {
+    mapItems.resize(itemAmount);
+    
+    //Coin
+	 //???
+	coinTexture.loadFromFile("Images/Level/Items/Golden Coin.png");
+    Coin* goldenCoin = new Coin(coinTexture, coinValue);
+    goldenCoin->sprite.setScale(1, 1);
+
+    mapItems[0] = goldenCoin;
+
+
+    // mapItems[0] = goldenCoin;
+	////Key
+	//Texture keyTexture;
+	//keyTexture.loadFromFile("Images/Level/Items/Golden Key.png");
+	//mapItems[1] = new Key(keyTexture);
+
 }

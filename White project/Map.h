@@ -41,6 +41,10 @@ public:
 	Sprite lockSprite;
 	Texture lockTexture;
 
+	//Items
+	vector<Item*> items;
+	int itemAmount;
+
 public:
 	//Tiles coordinates
 	int startX;
@@ -60,5 +64,5 @@ public:
 
 	//Functions
 	void generateMap(int width, int height, int tileSize);
-	void generateItems();
+	void generateItems(vector <Item*> mapItems);
 };

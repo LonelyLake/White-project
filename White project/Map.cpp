@@ -12,6 +12,7 @@ Map::Map(Locations location, int* currentLevel, Player* player, RenderWindow *ta
 
 	tileScale = 12.f;
 
+	//Load textures
 	wallTexture.loadFromFile("Images/Map/Tiles/wall_2.png");
 	wallSprite.setTexture(wallTexture);
 	wallSprite.setScale(tileScale, tileScale);
@@ -28,6 +29,7 @@ Map::Map(Locations location, int* currentLevel, Player* player, RenderWindow *ta
 	lockSprite.setTexture(lockTexture);
 	lockSprite.setScale(5, 5);
 
+	itemAmount = 10;
 }
 
 Map::~Map()
@@ -151,28 +153,68 @@ void Map::generateMap(int width, int height, int tileSize)
 	}
 }
 
-void Map::generateItems()
+void Map::generateItems(vector <Item*> mapItems)
 {
-	for (int i = 1; i < height - 1; i++) {
-		for (int j = 1; j < width - 1; j++) {
-			tiles[i][j].sprite.setPosition(j * tileSize, i * tileSize);
-			target->draw(tiles[i][j].sprite);
+	items.clear(); // Clear the existing items vector
+
+	float randomNumber = 0.f;
+	float chanceOfGenerating = 0.1f;
+	bool willGenerateItem = false;
+
+	while (itemAmount > 0) {
+		// Go through the whole map
+		for (int i = 1; i < height - 1; i++) {
+			for (int j = 1; j < width - 1; j++) {
+
+				randomNumber = (float)rand() / 101.f;
+				if (randomNumber < chanceOfGenerating) {
+					willGenerateItem = true;
+				}
+				else {
+					willGenerateItem = false;
+				}
+				// If the tile is not a wall and it does not have an item
+
+				if (tiles[i][j].wall == false && tiles[i][j].hasItem == false && willGenerateItem) {
+					int randomID = 0; // Generate a random index
+					items.push_back(new Item(*mapItems[randomID]));
+					items.back()->isOnMap = true;
+
+					// Calculate the position to center the item on the tile
+					float itemX = j * tileSize + (tileSize / 2) - (items.back()->sprite.getTexture()->getSize().x / 2);
+					float itemY = i * tileSize + (tileSize / 2) - (items.back()->sprite.getTexture()->getSize().y / 2);
+
+					items.back()->sprite.setPosition(itemX, itemY);
+					tiles[i][j].hasItem = true; // Mark the tile as having an item
+					itemAmount--;
+					break; // Break out of the inner loop once an item is placed
+				}
+			}
 		}
 	}
 }
 
 
 
+
+
 void Map::render() {
 	// Clear the window
 
-	
+	// Render the map tiles
 	for (int i = 1; i < height - 1; i++) {
 		for (int j = 1; j < width - 1; j++) {
 			tiles[i][j].sprite.setPosition(j * tileSize, i * tileSize);
 			target->draw(tiles[i][j].sprite);
 		}
 	}
+
+	// Render the items
+	for (int i = 0; i < items.size(); i++) {
+		if (items[i]->isOnMap)
+		target->draw(items[i]->sprite);
+	}
+	//target->draw(items[0]->sprite);
 
 	target->draw(secretSprite);
 	target->draw(lockSprite);

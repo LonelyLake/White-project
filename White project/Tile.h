@@ -8,5 +8,7 @@ public:
 
 	Tile();
 	~Tile();
+
+	Vector2f getItemPosition(int tileSize, const sf::Texture* itemTexture);
 };
 

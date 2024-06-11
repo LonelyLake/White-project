@@ -4,8 +4,7 @@
 #include "Level.h"
 #include "Map.h"
 
-
-
+//Game modes
 enum class GameModes
 {
 	TRAVEL,
@@ -17,6 +16,7 @@ enum class GameModes
 	MENU,
 };
 
+//Locations
 enum class Locations
 {
 	CITY,
@@ -26,11 +26,10 @@ enum class Locations
 	CASTLE_PRINCESS_ROOM
 };
 
-class Player;
-class Level;
-enum class Locations;
 
 
+
+//Game
 class Game
 {
 public:
@@ -40,33 +39,34 @@ public:
 	VideoMode videomode;
 	Event event;
 
-	bool pause;
+//Game logic:
+	
 
-	//Game objects
-	Locations location;
-
+	//Player
 	Player* player;
 	Texture playerTexture;
 	Sprite playerSprite;
 
-	//Game logic
-	int currentLevel;
-	Level* level;
-
-
 	//Game mode
 	GameModes gameMode;
+	bool pause;
+
+	//Game world mechanics
+	Locations location;
+	int currentLevel;
+	Level* level;
 
 	//Test
 	bool editorMode;
 
-	//private functions
+	//Initialization
 	void initVariables();
 	void initWindow();
 
 public:
-	//constructors
+	//constructor
 	Game();
+	//destructor
 	virtual ~Game();
 
 	//accessors

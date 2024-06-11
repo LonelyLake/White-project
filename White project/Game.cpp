@@ -4,54 +4,57 @@
 //private functions
 void Game::initVariables()
 {
-
+	
+	//Init player
 	playerTexture.loadFromFile("Images/Player.png", IntRect(20, 20, 45, 80));
 
 	player = new Player("Knight", playerTexture, window);
 
-	//Game variables
-	location = Locations::CASTLE_HALL;
-	
-	
-
-	//Level variables
-	currentLevel = 1;
-	level = new Level(location, &currentLevel, player, window);
-
-	//set player to level
-	level->setPlayer(player);
-
+	//Init gamemode
 	gameMode = GameModes::TRAVEL;
 	pause = false;
 
-	//Create player////////////////////////////////
+	//Init location
+	location = Locations::CASTLE_HALL;
 	
+	//Init level
+	currentLevel = 1;
+	level = new Level(location, &currentLevel, player, window);
+
+	//Set player to level
+	level->setPlayer(player);
 }
 
 void Game::initWindow()
 {
+	//Create window
 	videomode.height = 1000;
 	videomode.width = 1200;
 	window = new RenderWindow(videomode, "Simple game", Style::Titlebar | Style::Close);
 }
 
-//constructors
+//Constructor
 Game::Game()
 {
+	//Initialization
 	initWindow();
 	initVariables();
 }
 
+//Destructor
 Game::~Game()
 {
 	delete window;
 }
-//accessors
+
+//Accessors
 const bool Game::running() const {
 	return window->isOpen();
 }
 
-//functions
+//Functions
+
+//Check for events
 void Game::pollEvents() {
 	//event polling
 	while (window->pollEvent(event)) {
@@ -60,6 +63,8 @@ void Game::pollEvents() {
 			window->close();
 			break;
 		case Event::KeyPressed:
+
+			//Game pause
 			if (event.key.code == Keyboard::Escape) {
 				if (!pause){
 					pause = true;
@@ -71,6 +76,7 @@ void Game::pollEvents() {
 				//window->close();
 			}
 
+			//Edtor mode
 			if (event.key.code == Keyboard::K) {
 				if (!editorMode) {
 					editorMode = true;
@@ -78,33 +84,47 @@ void Game::pollEvents() {
 				else {
 					editorMode = false;
 				}
-
-				//window->close();
 			}
 			break;
 		}
 	}
 }
 
+//Update
 void Game::update()
 {
+	//SFML events
 	pollEvents();
 
+	// Delta time calculation
+	static Clock clock;
+	float dt = clock.restart().asSeconds();;
+
+	//Update game objects
 	if (!pause) {
+		//Update player
 		player->update();
-		level->update();
+
+		//Update travel mode
+		switch (gameMode) {
+		case GameModes::TRAVEL:
+			level->update(dt);
+			break;
+		}
 	}
 
+	//Set editor mode - TEST!!!!!!!!!!!!!!
 	if (editorMode) {
 		player->view.setSize(window->getSize().x * 8, window->getSize().y * 8);
-		player->velocity = 5;
+		player->velocity = 30.f;
 	}
 	else {
 		player->view.setSize(window->getSize().x, window->getSize().y);
-		player->velocity = 0.7f;
+		player->velocity = 400.f;
 	}
 }
 
+//Render
 void Game::render()
 {
 	/*
@@ -116,13 +136,9 @@ void Game::render()
 		renders game objects
 	*/
 
+	//Render game
 	window->clear();
 	level->renderLevel();
-
-	
-
-	// Draw game objects
-	//...
 
 	// Display the rendered frame
 	window->display();

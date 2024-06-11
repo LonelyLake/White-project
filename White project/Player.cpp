@@ -14,7 +14,7 @@ Player::Player(string name, Texture playerTexture, RenderWindow* window)
 	sprite.setScale(1.5f, 1.5f);
 	sprite.setPosition(positionX, positionY);
 
-	velocity = 0.7f;
+	velocity = 10.f;
 
 	this->window = window;
 

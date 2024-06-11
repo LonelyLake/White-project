@@ -16,6 +16,9 @@
     <Filter Include="Game logic">
       <UniqueIdentifier>{938c0ce5-4037-4789-913c-b16bd410763e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game logic\Items">
+      <UniqueIdentifier>{83dcc1d4-3687-4fb8-866e-81146f5b76bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -39,6 +42,9 @@
     <ClCompile Include="Tile.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Game logic\Items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -58,6 +64,9 @@
     </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Game logic\Items</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -3,10 +3,9 @@
 #include "Game.h"
 #include "Player.h"
 #include "Tile.h"
+#include "Item.h"
 
-enum class Locations;
-class Player;
-class Tile;
+
 
 class Map
 {
@@ -59,5 +58,7 @@ public:
 	void update();
 	void render();
 
+	//Functions
 	void generateMap(int width, int height, int tileSize);
+	void generateItems();
 };

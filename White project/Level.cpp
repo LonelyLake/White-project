@@ -23,32 +23,29 @@ Level::~Level() {
 
 
 //map->tiles[player->positionY / map->tileSize - 1][player->positionX / map->tileSize - 1].getGlobalBounds().getPosition().x / map->tileSize;
-void Level::update()
-{
+void Level::update(float deltaTime) {
     float playerX = player->sprite.getPosition().x;
     float playerY = player->sprite.getPosition().y;
 
     input();
 
-
     sf::FloatRect playerBounds(playerX, playerY, player->sprite.getGlobalBounds().width, player->sprite.getGlobalBounds().height);
 
-    switch (player->controls)
-    {
+    switch (player->controls) {
     case Controls::UP:
-        playerBounds.top -= player->velocity;
+        playerBounds.top -= player->velocity * deltaTime;
         break;
 
     case Controls::DOWN:
-        playerBounds.top += player->velocity;
+        playerBounds.top += player->velocity * deltaTime;
         break;
 
     case Controls::LEFT:
-        playerBounds.left -= player->velocity;
+        playerBounds.left -= player->velocity * deltaTime;
         break;
 
     case Controls::RIGHT:
-        playerBounds.left += player->velocity;
+        playerBounds.left += player->velocity * deltaTime;
         break;
 
     default:
@@ -56,37 +53,43 @@ void Level::update()
         break;
     }
 
-
-    if (playerX < map->tileSize || playerX + player->sprite.getGlobalBounds().width > map->width * map->tileSize ||
-        playerY < map->tileSize || playerY + player->sprite.getGlobalBounds().height > map->height * map->tileSize)
-    {
-        // Allow the player to move partially into the edge of the map
-        
-    }
-
     // Check for collisions with walls
-    for (int y = playerBounds.top / map->tileSize; y <= (playerBounds.top + playerBounds.height) / map->tileSize; ++y)
-    {
-        for (int x = playerBounds.left / map->tileSize; x <= (playerBounds.left + playerBounds.width) / map->tileSize; ++x)
-        {
-            if (map->tiles[y][x].wall && playerBounds.intersects(map->tiles[y][x].sprite.getGlobalBounds()))
-            {
+    for (int y = playerBounds.top / map->tileSize; y <= (playerBounds.top + playerBounds.height) / map->tileSize; ++y) {
+        for (int x = playerBounds.left / map->tileSize; x <= (playerBounds.left + playerBounds.width) / map->tileSize; ++x) {
+            if (map->tiles[y][x].wall && playerBounds.intersects(map->tiles[y][x].sprite.getGlobalBounds())) {
                 // Handle collision with wall
-                // You can choose to move the player back to the previous position or apply other collision response logic
-                playerBounds = player->sprite.getGlobalBounds();
+                // Move the player back to the previous position
+                switch (player->controls) {
+                case Controls::UP:
+                    playerBounds.top += player->velocity * deltaTime;
+                    break;
+
+                case Controls::DOWN:
+                    playerBounds.top -= player->velocity * deltaTime;
+                    break;
+
+                case Controls::LEFT:
+                    playerBounds.left += player->velocity * deltaTime;
+                    break;
+
+                case Controls::RIGHT:
+                    playerBounds.left -= player->velocity * deltaTime;
+                    break;
+
+                default:
+                    break;
+                }
                 break;
             }
         }
     }
 
     // Prevent the player from moving into the first and last lines of the map
-    if (playerBounds.top < map->tileSize || playerBounds.top + playerBounds.height > map->height * map->tileSize - map->tileSize)
-    {
+    if (playerBounds.top < map->tileSize || playerBounds.top + playerBounds.height > map->height * map->tileSize - map->tileSize) {
         playerBounds.top = clamp(playerBounds.top, static_cast<float>(map->tileSize), static_cast<float>(map->height * map->tileSize - player->sprite.getGlobalBounds().height - map->tileSize));
     }
 
-    if (playerBounds.left < map->tileSize || playerBounds.left + playerBounds.width > map->width * map->tileSize - map->tileSize)
-    {
+    if (playerBounds.left < map->tileSize || playerBounds.left + playerBounds.width > map->width * map->tileSize - map->tileSize) {
         playerBounds.left = clamp(playerBounds.left, static_cast<float>(map->tileSize), static_cast<float>(map->width * map->tileSize - player->sprite.getGlobalBounds().width - map->tileSize));
     }
 

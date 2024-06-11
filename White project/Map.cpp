@@ -22,7 +22,7 @@ Map::Map(Locations location, int* currentLevel, Player* player, RenderWindow *ta
 
 	secretTexture.loadFromFile("Images/Map/Items/Golden Key.png");
 	secretSprite.setTexture(secretTexture);
-	secretSprite.setScale(5, 5);
+	secretSprite.setScale(2, 2);
 
 	lockTexture.loadFromFile("Images/Map/Tiles/door_closed.png");
 	lockSprite.setTexture(lockTexture);
@@ -150,6 +150,18 @@ void Map::generateMap(int width, int height, int tileSize)
 		player->positionYTile = startY;
 	}
 }
+
+void Map::generateItems()
+{
+	for (int i = 1; i < height - 1; i++) {
+		for (int j = 1; j < width - 1; j++) {
+			tiles[i][j].sprite.setPosition(j * tileSize, i * tileSize);
+			target->draw(tiles[i][j].sprite);
+		}
+	}
+}
+
+
 
 void Map::render() {
 	// Clear the window

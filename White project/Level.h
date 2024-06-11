@@ -2,12 +2,10 @@
 
 #include "Game.h"
 #include "Map.h"
+#include "Item.h"
 #include "Player.h"
 
-class Player;
-enum class Locations;
-class Map;
-class Tile;
+
 
 
 class Level
@@ -17,21 +15,23 @@ public:
 
 	Locations location;
 
+	//Texture backgroundTexture;
+	//Sprite backgroundSprite;
+
 	Map* map;
-
 	int tileSize;
-
 	int newXTile;
 
-	Texture backgroundTexture;
-	Sprite backgroundSprite;
+
 
 	Player* player;
+
+	
 
 	Level(Locations location, int *currentLevel, Player* player, RenderWindow* target);
 	virtual ~Level();
 
-	void update();
+	void update(float deltaTime);
 
 	void input();
 	void renderLevel();

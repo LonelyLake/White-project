@@ -23,3 +23,14 @@ template <typename T>
 constexpr T clamp(T value, T min, T max) {
     return std::max(min, std::min(value, max));
 }
+
+class Player;
+enum class Locations;
+class Map;
+class Tile;
+class Item;
+
+class Level;
+
+
+

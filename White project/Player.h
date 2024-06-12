@@ -25,9 +25,12 @@ public:
 
 	//Stats
 	int health;
+	int masHealth;;
 	int damage;
 
 	float velocity;
+
+	int money;
 
 	//Position of the player on the map.
 	float positionX;

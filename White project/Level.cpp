@@ -168,9 +168,9 @@ void Level::renderLevel()
 }
 
 //Other
-void Level::setPlayer(Player* player) {
-    this->player = player;
-}
+//void Level::setPlayer(Player* player) {
+//    this->player = player;
+//}
 
 void Level::addMapItems(int itemAmount) {
     mapItems.resize(itemAmount);
@@ -188,7 +188,7 @@ void Level::addMapItems(int itemAmount) {
     Heart* heart = new Heart(heartTexture, 1);
     heart->sprite.setScale(1, 1);
 
-    mapItems[1] = goldenCoin;
+    mapItems[1] = heart;
 
     // mapItems[0] = goldenCoin;
 	////Key
@@ -245,3 +245,4 @@ void Level::updatePlayerAnimation(float deltaTime) {
 
         
 }
+

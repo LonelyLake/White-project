@@ -40,6 +40,7 @@ public:
 	Texture coinTexture;
 	Texture heartTexture;
 
+	//Controls
 	bool up;
 	bool down;
 	bool left;
@@ -47,18 +48,26 @@ public:
 
 	bool isActiveKey;
 
+	//Constructor
 	Level(Game* game);
+	//Destructor
 	virtual ~Level();
 
+//Functions:
+	//Update
 	void update(float deltaTime);
-
+	void updatePlayerAnimation(float deltaTime);
+	//Input
 	void input(float deltaTime);
+	//Render
 	void renderLevel();
 
 	//Other
-	void setPlayer(Player* player);
+	//void setPlayer(Player* player);
+	
+	//Add items that will appear on map
 	void addMapItems(int itemAmount);
 
-	void updatePlayerAnimation(float deltaTime);
+	void checkItemCollision();
+	void handleItemCollision(Item* item);
 };
-

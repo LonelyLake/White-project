@@ -5,27 +5,29 @@
 #include "Tile.h"
 #include "Item.h"
 
-
-
 class Map
 {
 public:
+//Variables:
+ 
+	//Window
 	RenderWindow* target;
 
+	//Player
 	Player* player;
 
+	//Levels
 	Locations location;
 	int* currentLevel;
 
+	//Size
 	int height;
 	int width;
 
 	float tileSize;
 	//float tileScale;
 
-	
-
-	//Map
+	//Tiles
 	vector<vector<Tile>> tiles;
 
 	//Sprites
@@ -55,10 +57,11 @@ public:
 	int secretX;
 	int secretY;
 
+	//Constructor
 	Map(Level *level);
 	~Map();
 
-	//Functions
+	//Basic functions
 	void update();
 	void render();
 

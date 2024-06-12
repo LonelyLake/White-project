@@ -49,6 +49,7 @@ public:
 	Texture playerTexture;
 	Sprite playerSprite;
 
+	//View
 	View view;
 
 	//Game mode

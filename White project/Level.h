@@ -40,6 +40,13 @@ public:
 	Texture coinTexture;
 	Texture heartTexture;
 
+	bool up;
+	bool down;
+	bool left;
+	bool right;
+
+	bool isActiveKey;
+
 	Level(Locations location, int* currentLevel, Player* player, RenderWindow* target);
 	virtual ~Level();
 

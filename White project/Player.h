@@ -13,7 +13,7 @@ enum class Controls
 	UP,
 	DOWN,
 	LEFT,
-	RIGHT
+	RIGHT,
 };
 
 

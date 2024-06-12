@@ -102,6 +102,7 @@ void Game::update()
 	//Update game objects
 	if (!pause) {
 		//Update player
+
 		player->update();
 
 		//Update travel mode

@@ -27,6 +27,8 @@ Level::Level(Locations location,int* currentLevel, Player* player, sf::RenderWin
     cout << &mapItems << endl;
 	map->generateItems(mapItems);
     
+
+    isActiveKey = false;
 }
 
 Level::~Level() {
@@ -35,36 +37,29 @@ Level::~Level() {
 
 
 //map->tiles[player->positionY / map->tileSize - 1][player->positionX / map->tileSize - 1].getGlobalBounds().getPosition().x / map->tileSize;
-void Level::update(float deltaTime) {
-    float playerX = player->sprite.getPosition().x;
-    float playerY = player->sprite.getPosition().y;
+    void Level::update(float deltaTime) {
+        float playerX = player->sprite.getPosition().x;
+        float playerY = player->sprite.getPosition().y;
 
-    input(deltaTime);
+      input(deltaTime);
 
-    //Move player
-    sf::FloatRect playerBounds(playerX, playerY, player->sprite.getGlobalBounds().width, player->sprite.getGlobalBounds().height);
 
-    switch (player->controls) {
-    case Controls::UP:
-        playerBounds.top -= player->velocity * deltaTime;
-        break;
+        // Move player
+        sf::FloatRect playerBounds(playerX, playerY, player->sprite.getGlobalBounds().width, player->sprite.getGlobalBounds().height);
 
-    case Controls::DOWN:
-        playerBounds.top += player->velocity * deltaTime;
-        break;
+        if (player->controls == Controls::UP) {
+            playerBounds.top -= player->velocity * deltaTime;
+        }
+        if (player->controls == Controls::DOWN) {
+            playerBounds.top += player->velocity * deltaTime;
+        }
+        if (player->controls == Controls::LEFT) {
+            playerBounds.left -= player->velocity * deltaTime;
+        }
+        if (player->controls == Controls:: RIGHT) {
+            playerBounds.left += player->velocity * deltaTime;
+        }
 
-    case Controls::LEFT:
-        playerBounds.left -= player->velocity * deltaTime;
-        break;
-
-    case Controls::RIGHT:
-        playerBounds.left += player->velocity * deltaTime;
-        break;
-
-    default:
-        player->controls = Controls::IDLE;
-        break;
-    }
 
     // Check for collisions with walls
     for (int y = playerBounds.top / map->tileSize; y <= (playerBounds.top + playerBounds.height) / map->tileSize; ++y) {
@@ -116,26 +111,45 @@ void Level::update(float deltaTime) {
 }
 
 //Player controls
-void Level::input(float deltaTime) {
-	player->controls = Controls::IDLE;
+    void Level::input(float deltaTime) {
+		if (!isActiveKey)
+        {
+            up = Keyboard::isKeyPressed(Keyboard::W);
+            down = Keyboard::isKeyPressed(Keyboard::S);
+            left = Keyboard::isKeyPressed(Keyboard::A);
+            right = Keyboard::isKeyPressed(Keyboard::D);
+        }
 
-	if (Keyboard::isKeyPressed(Keyboard::W))
-	{
-		player->controls = Controls::UP;
-	}
-	if (Keyboard::isKeyPressed(Keyboard::S))
-	{
-		player->controls = Controls::DOWN;
-	}
-	if (Keyboard::isKeyPressed(Keyboard::A))
-	{
-		player->controls = Controls::LEFT;
-	}
-	if (Keyboard::isKeyPressed(Keyboard::D))
-	{
-		player->controls = Controls::RIGHT;
-	}
-}
+        player->controls = Controls::IDLE;
+        if (up) {
+            player->controls = Controls::UP;
+            up = false;
+        }
+        else if (left) {
+            player->controls = Controls::LEFT;
+			left = false;
+        }
+        else if (right) {
+            player->controls = Controls::RIGHT;
+			right = false;
+        }
+        else if (down) {
+            player->controls = Controls::DOWN;
+			down = false;
+        }
+
+        if (up || left || right || down) {
+            isActiveKey = true;
+		}
+		else {
+			isActiveKey = false;
+		}
+        
+
+        //VICTORY!!!
+    }
+    
+
 
 void Level::renderLevel()
 {

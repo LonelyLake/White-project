@@ -39,13 +39,17 @@ public:
 	VideoMode videomode;
 	Event event;
 
+	Clock clock;
+	float dt;
+
 //Game logic:
 	
-
 	//Player
 	Player* player;
 	Texture playerTexture;
 	Sprite playerSprite;
+
+	View view;
 
 	//Game mode
 	GameModes gameMode;
@@ -63,6 +67,8 @@ public:
 	void initVariables();
 	void initWindow();
 
+	//Game processs
+
 public:
 	//constructor
 	Game();
@@ -76,5 +82,7 @@ public:
 	void pollEvents();
 	void update();
 	void render();
+
+	void gameProcess();
 };
 

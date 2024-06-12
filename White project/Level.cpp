@@ -4,16 +4,17 @@
 
 enum class Locations;
 
-Level::Level(Locations location,int* currentLevel, Player* player, sf::RenderWindow* target)
+Level::Level(Game* game)
 {
-    this->currentLevel = currentLevel;
-    this->target = target;
-    this->player = player;
-    this->location = location;
-    tileSize = 140;
+    //Take data from game
+    this->player = game->player;
+    this->currentLevel = &game->currentLevel;
+    this->target = game->window;
+    this->location = game->location;
 
 	//Create map
-    map = new Map(location, currentLevel, player, target);
+    tileSize = 140;
+    map = new Map(this);
     map->generateMap(30, 30, tileSize);
 
     //Item info
@@ -22,12 +23,11 @@ Level::Level(Locations location,int* currentLevel, Player* player, sf::RenderWin
     //Add map items for level
     itemAmount = 2;
     addMapItems(itemAmount);
-    //Generate items on map
 
-    cout << &mapItems << endl;
+    //Generate items on map
 	map->generateItems(mapItems);
     
-
+	//Game process
     isActiveKey = false;
 }
 
@@ -199,25 +199,48 @@ void Level::addMapItems(int itemAmount) {
 }
 
 void Level::updatePlayerAnimation(float deltaTime) {
-            static int frameIndex = 0;
-            static float animationTimer = 0.f;
-            const float animationSpeed = 0.1f; // Fixed animation speed
+    
+    if(player->controls != Controls::IDLE){
+        static int frameIndex = 0;
+        static float animationTimer = 0.f;
+        const float animationSpeed = 0.1f; // Fixed animation speed
 
-            animationTimer += 0.01f; // Fixed time increment
-            if (animationTimer >= animationSpeed) {
-                frameIndex = (frameIndex + 1) % 8; // Assuming 3 frames in the animation
-                animationTimer = 0.0f;
-            }
+        animationTimer += 0.01f; // Fixed time increment
+        if (animationTimer >= animationSpeed) {
+            frameIndex = (frameIndex + 1) % 8; // Assuming 3 frames in the animation
+            animationTimer = 0.0f;
+        }
 
-            int startX = 0; // Starting x-coordinate of the animation frames
-            int startY = 160; // Starting y-coordinate of the animation frames (4th line)
-            int frameWidth = 32; // Width of each animation frame
-            int frameHeight = 32; // Height of each animation frame
+        int startX = 0; // Starting x-coordinate of the animation frames
+        int startY = 160; // Starting y-coordinate of the animation frames (4th line)
+        int frameWidth = 32; // Width of each animation frame
+        int frameHeight = 32; // Height of each animation frame
 
-            player->texture.loadFromFile("Images/AnimationSheet_Character.png", IntRect(startX + frameIndex * frameWidth, startY, frameWidth, frameHeight));
-            player->sprite.setTexture(player->texture);
-            player->sprite.setScale(2.f, 2.f);
-        
+        player->texture.loadFromFile("Images/AnimationSheet_Character.png", IntRect(startX + frameIndex * frameWidth, startY, frameWidth, frameHeight));
+        player->sprite.setTexture(player->texture);
+        player->sprite.setScale(2.5f, 2.5f);
+
+    }
+    else {
+        static int frameIndex = 0;
+        static float animationTimer = 0.f;
+        const float animationSpeed = 0.5f; // Fixed animation speed
+
+        animationTimer += 0.01f; // Fixed time increment
+        if (animationTimer >= animationSpeed) {
+            frameIndex = (frameIndex + 1) % 2; // Assuming 3 frames in the animation
+            animationTimer = 0.0f;
+        }
+
+        int startX = 0; // Starting x-coordinate of the animation frames
+        int startY = 0; // Starting y-coordinate of the animation frames (4th line)
+        int frameWidth = 32; // Width of each animation frame
+        int frameHeight = 32; // Height of each animation frame
+
+        player->texture.loadFromFile("Images/AnimationSheet_Character.png", IntRect(startX + frameIndex * frameWidth, startY, frameWidth, frameHeight));
+        player->sprite.setTexture(player->texture);
+        player->sprite.setScale(2.5f, 2.5f);
+    }
         //...
 
         

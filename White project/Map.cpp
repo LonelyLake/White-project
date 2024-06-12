@@ -2,34 +2,19 @@
 #include "Map.h"
 
 
-Map::Map(Locations location, int* currentLevel, Player* player, RenderWindow *target)
+Map::Map(Level *level)
 {
 	//Map
-	this->location = location;
-	this->currentLevel = currentLevel;
-	this->player = player;
-	this->target = target;
+	this->location = level->location;
+	this->currentLevel = level->currentLevel;
+	this->player = level->player;
+	this->target = level->target;
 
-	tileScale = 12.f;
+	//Load textures for tiles
+	loadTileTextures();
 
-	//Load textures
-	wallTexture.loadFromFile("Images/Map/Tiles/wall_2.png");
-	wallSprite.setTexture(wallTexture);
-	wallSprite.setScale(tileScale, tileScale);
-
-	emptyTexture.loadFromFile("Images/Map/Tiles/Floor.png", IntRect(0, 0, 20, 20));
-	emptySprite.setTexture(emptyTexture);
-	emptySprite.setScale(tileScale, tileScale);
-
-	secretTexture.loadFromFile("Images/Map/Items/Golden Key.png");
-	secretSprite.setTexture(secretTexture);
-	secretSprite.setScale(2, 2);
-
-	lockTexture.loadFromFile("Images/Map/Tiles/door_closed.png");
-	lockSprite.setTexture(lockTexture);
-	lockSprite.setScale(5, 5);
-
-	itemAmount = 10;
+	//Init variables
+	itemAmount = 10; //Ammount items on the map
 }
 
 Map::~Map()
@@ -221,4 +206,25 @@ void Map::render() {
 
 	// Display the rendered frame
 	//Test
+}
+
+void Map::loadTileTextures() {
+	float tileScale = 12.f; //Scale for tiles textures
+	
+	//Load textures
+	wallTexture.loadFromFile("Images/Map/Tiles/wall_2.png");
+	wallSprite.setTexture(wallTexture);
+	wallSprite.setScale(tileScale, tileScale);
+
+	emptyTexture.loadFromFile("Images/Map/Tiles/Floor.png", IntRect(0, 0, 20, 20));
+	emptySprite.setTexture(emptyTexture);
+	emptySprite.setScale(tileScale, tileScale);
+
+	secretTexture.loadFromFile("Images/Map/Items/Golden Key.png");
+	secretSprite.setTexture(secretTexture);
+	secretSprite.setScale(2, 2);
+
+	lockTexture.loadFromFile("Images/Map/Tiles/door_closed.png");
+	lockSprite.setTexture(lockTexture);
+	lockSprite.setScale(5, 5);
 }

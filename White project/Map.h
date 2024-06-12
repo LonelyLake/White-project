@@ -21,7 +21,7 @@ public:
 	int width;
 
 	float tileSize;
-	float tileScale;
+	//float tileScale;
 
 	
 
@@ -55,7 +55,7 @@ public:
 	int secretX;
 	int secretY;
 
-	Map(Locations location, int* currentLevel, Player* player, RenderWindow* target);
+	Map(Level *level);
 	~Map();
 
 	//Functions
@@ -65,4 +65,7 @@ public:
 	//Functions
 	void generateMap(int width, int height, int tileSize);
 	void generateItems(vector <Item*> mapItems);
+
+	void loadTileTextures();
 };
+

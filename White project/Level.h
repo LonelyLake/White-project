@@ -47,7 +47,7 @@ public:
 
 	bool isActiveKey;
 
-	Level(Locations location, int* currentLevel, Player* player, RenderWindow* target);
+	Level(Game* game);
 	virtual ~Level();
 
 	void update(float deltaTime);

@@ -1,8 +1,12 @@
 #include "stdafx.h"
 #include "Player.h"
+#include "Game.h"
 
-Player::Player(string name, Texture playerTexture, RenderWindow* window)
+Player::Player(Game* game, string name, Texture playerTexture)
 {
+	this->window = game->window;
+	
+
 	this->name = name;
 	this->texture = playerTexture;
 	positionX = 0.f;
@@ -16,28 +20,22 @@ Player::Player(string name, Texture playerTexture, RenderWindow* window)
 
 	velocity = 10.f;
 
-	this->window = window;
 
-	// Initialize the view with the window's size
-	view.setSize(window->getSize().x, window->getSize().y);
-	//TEst view.setSize(window->getSize().x * 8, window->getSize().y * 8);
-
-	view.setCenter(positionX, positionY);
+	
 }
 
 Player::~Player() {
-	view.setCenter(positionX, positionY);
+	
 }
 
 void Player::update() {
 
-	// Update the view's center
-	view.setCenter(positionX, positionY);
+	
 	
 }
 
 void Player::render() {
-	window->setView(view);
+	
 	
 	window->draw(sprite);
 }

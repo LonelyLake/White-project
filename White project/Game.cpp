@@ -1,13 +1,17 @@
 #include "stdafx.h"
 #include "Game.h"
 
-//private functions
+//Initialization
 void Game::initVariables()
 {
 	
 	//Init player
 	playerTexture.loadFromFile("Images/AnimationSheet_Character.png", IntRect(0, 0, 32, 32));
-	player = new Player("Knight", playerTexture, window);
+	player = new Player(this, "Knight", playerTexture);
+
+	// Initialize the view with the window's size
+	view.setSize(window->getSize().x, window->getSize().y);
+	view.setCenter(player->positionX, player->positionY);
 
 	//Init gamemode
 	gameMode = GameModes::TRAVEL;
@@ -18,10 +22,10 @@ void Game::initVariables()
 	
 	//Init level
 	currentLevel = 1;
-	level = new Level(location, &currentLevel, player, window);
+	level = new Level(this);
 
 	//Set player to level
-	level->setPlayer(player);
+	//level->setPlayer(player);
 }
 
 void Game::initWindow()
@@ -43,6 +47,8 @@ Game::Game()
 //Destructor
 Game::~Game()
 {
+	delete level; //Remove later
+	delete player;
 	delete window;
 }
 
@@ -53,17 +59,20 @@ const bool Game::running() const {
 
 //Functions
 
-//Check for events
+//Check for events and basic input
 void Game::pollEvents() {
 	//event polling
 	while (window->pollEvent(event)) {
 		switch(event.type) {
+
+		//Close window
 		case Event::Closed:
 			window->close();
 			break;
+
 		case Event::KeyPressed:
 
-			//Game pause
+		//Game pause
 			if (event.key.code == Keyboard::Escape) {
 				if (!pause){
 					pause = true;
@@ -71,8 +80,6 @@ void Game::pollEvents() {
 				else {
 					pause = false;
 				}
-				
-				//window->close();
 			}
 
 			//Edtor mode
@@ -89,21 +96,22 @@ void Game::pollEvents() {
 	}
 }
 
-//Update
+//Update game
 void Game::update()
 {
 	//SFML events
 	pollEvents();
 
 	// Delta time calculation
-	static Clock clock;
-	float dt = clock.restart().asSeconds();;
+	dt = clock.restart().asSeconds();;
 
 	//Update game objects
 	if (!pause) {
 		//Update player
 
 		player->update();
+		// Update the view's center
+		view.setCenter(player->positionX,  player->positionY);
 
 		//Update travel mode
 		switch (gameMode) {
@@ -115,11 +123,11 @@ void Game::update()
 
 	//Set editor mode - TEST!!!!!!!!!!!!!!
 	if (editorMode) {
-		player->view.setSize(window->getSize().x * 8, window->getSize().y * 8);
+		view.setSize(window->getSize().x * 8, window->getSize().y * 8);
 		player->velocity = 1000.f;
 	}
 	else {
-		player->view.setSize(window->getSize().x, window->getSize().y);
+		view.setSize(window->getSize().x, window->getSize().y);
 		player->velocity = 400.f;
 	}
 }
@@ -136,10 +144,18 @@ void Game::render()
 		renders game objects
 	*/
 
-	//Render game
+	
 	window->clear();
+	//Set view
+	window->setView(view);
+	//Render game
 	level->renderLevel();
 
 	// Display the rendered frame
 	window->display();
 }
+
+//void Game::gameProcess()
+//{
+//	if()
+//}

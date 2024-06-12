@@ -36,9 +36,10 @@ public:
 	int positionXTile;
 	int positionYTile;
 
-	View view;
-
+	//Control keys
 	Controls controls;
+
+	//Camera view
 
 	//Window
 	RenderWindow* window;
@@ -52,7 +53,7 @@ public:
 	Level* level;
 	Map* map;
 
-	Player(string name, Texture playerTexture, RenderWindow* window);
+	Player(Game* game, string name, Texture playerTexture);
 
 	~Player();
 

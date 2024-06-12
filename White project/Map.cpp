@@ -162,7 +162,22 @@ void Map::generateItems(vector <Item*> mapItems)
 
 				if (tiles[i][j].wall == false && tiles[i][j].hasItem == false && willGenerateItem) {
 					int randomID = rand() % mapItems.size(); // Generate a random index
-					items.push_back(new Item(*mapItems[randomID]));
+					Item* item = mapItems[randomID]; // Get the item from the vector
+
+					Coin* coin = dynamic_cast<Coin*>(item); // Cast to Coin*
+					if (dynamic_cast<Coin*>(item)) {
+						items.push_back(new Coin(*coin)); // Create a new Coin object
+					}
+					Heart* heart = dynamic_cast<Heart*>(item); // Cast to Coin*
+					if (dynamic_cast<Heart*>(item)) {
+						items.push_back(new Heart(*heart)); // Create a new Coin object
+					}
+
+					else {
+						// Handle the case where the item is not a Coin
+						// You can add more dynamic casts for other types of items
+					}
+
 					items.back()->isOnMap = true;
 
 					// Calculate the position to center the item on the tile
@@ -195,9 +210,10 @@ void Map::render() {
 	}
 
 	// Render the items
-	for (int i = 0; i < items.size(); i++) {
-		if (items[i]->isOnMap)
-		target->draw(items[i]->sprite);
+	for (auto it = items.begin(); it != items.end(); ++it) {
+		if ((*it)->isOnMap) {
+			target->draw((*it)->sprite);
+		}
 	}
 	//target->draw(items[0]->sprite);
 

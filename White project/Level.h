@@ -68,6 +68,9 @@ public:
 	//Add items that will appear on map
 	void addMapItems(int itemAmount);
 
-	void checkItemCollision();
-	void handleItemCollision(Item* item);
+	//void checkItemCollision();
+	//void handleItemCollision(Item* item);
+
+	void nearItems();
+	void takeItem(Item* item);
 };

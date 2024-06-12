@@ -108,6 +108,7 @@ Level::~Level() {
     player->positionYTile = static_cast<int>(playerBounds.top) / map->tileSize;
 
     updatePlayerAnimation(deltaTime);
+    nearItems();
 }
 
 //Player controls
@@ -246,3 +247,42 @@ void Level::updatePlayerAnimation(float deltaTime) {
         
 }
 
+void Level::nearItems() {
+    for (Item* item : map->items) {
+        sf::FloatRect playerBounds(player->sprite.getPosition().x, player->sprite.getPosition().y, player->sprite.getGlobalBounds().width, player->sprite.getGlobalBounds().height);
+        sf::FloatRect itemBounds(item->sprite.getPosition().x, item->sprite.getPosition().y, item->sprite.getGlobalBounds().width, item->sprite.getGlobalBounds().height);
+
+        if (playerBounds.intersects(itemBounds)) {
+            // Player has touched the item, so handle the item's interaction
+            takeItem(item);
+            break;
+        }
+    }
+}
+
+void Level::takeItem(Item* item) {
+    // Handle the interaction with the item
+    // For example, you can remove the item from the mapItems vector and update the player's inventory
+    //mapItems.erase(std::remove(mapItems.begin(), mapItems.end(), item), mapItems.end());
+    //delete item;
+
+    // You can also update the player's attributes based on the type of item
+    if (dynamic_cast<Coin*>(item)) {
+        player->money += static_cast<Coin*>(item)->value;
+        cout << "take coin" << endl;
+    }
+    else if (dynamic_cast<Heart*>(item)) {
+        player->health += static_cast<Heart*>(item)->value;
+		cout << "take heart" << endl;
+    }
+
+    // For example, you can remove the item from the mapItems vector and update the player's inventory
+    for (auto it = map->items.begin(); it != map->items.end(); ++it) {
+        if (*it == item) {
+            map->items.erase(it);
+            delete item;
+            break;
+        }
+    }
+    // Add more item types and their respective handling logic here
+}

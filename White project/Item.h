@@ -14,7 +14,7 @@ public:
 	bool isOnMap;
 
 	//Parameters
-	int value = NULL;
+	int value;
 
 	//Constructor
 	Item();
@@ -24,6 +24,6 @@ public:
 	Item(const Item& sItem);
 		
 	//Destructor
-	~Item();
+	virtual ~Item();
 };
 

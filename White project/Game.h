@@ -1,8 +1,13 @@
 #pragma once
 
+
+#include "Menu.h"
 #include "Player.h"
 #include "Level.h"
-#include "Map.h"
+
+class Menu;
+class Player;
+class Level;
 
 //Game modes
 enum class GameModes
@@ -42,6 +47,11 @@ public:
 	Clock clock;
 	float dt;
 
+	bool isMenuActive;
+
+//Additions
+	Music music;
+	
 //Game logic:
 	
 	//Player
@@ -81,9 +91,16 @@ public:
 
 	//functions
 	void pollEvents();
-	void update();
+	void update(float dt);
 	void render();
 
 	void gameProcess();
+
+	void run();
+	void startGame();
+	void exitGame();
+
+private:
+	Menu* menu;
 };
 

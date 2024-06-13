@@ -6,17 +6,12 @@ int main()
 {
 	//init random seed
 	srand(time(NULL));
-	//init Game engine
+
+	// Create an instance of the Game class
 	Game game;
 
-	//Game loop
-	while (game.running())
-	{
-		//Update
-		game.update();
-		//Render
-		game.render();
-	}
+	// Run the game
+	game.run();
 
 	//End program
 	return 0;

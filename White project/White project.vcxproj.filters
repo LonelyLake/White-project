@@ -57,6 +57,9 @@
     <ClCompile Include="Heart.cpp">
       <Filter>Game logic\Items\Misc</Filter>
     </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -85,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="Heart.h">
       <Filter>Game logic\Items\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Source files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

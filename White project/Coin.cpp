@@ -13,3 +13,9 @@ Coin::Coin(Texture texture, int value) {
 Coin::~Coin() {
 
 }
+
+//void Coin::collect(Player* player)
+//{
+//	player->money += value;
+//}
+

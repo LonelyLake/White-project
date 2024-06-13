@@ -1,9 +1,7 @@
 #pragma once
 
-#include "Game.h"
-#include "Player.h"
+#include "Level.h"
 #include "Tile.h"
-#include "Item.h"
 
 class Map
 {

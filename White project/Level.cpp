@@ -268,8 +268,9 @@ void Level::takeItem(Item* item) {
 
     // You can also update the player's attributes based on the type of item
     if (dynamic_cast<Coin*>(item)) {
-        player->money += static_cast<Coin*>(item)->value;
+       // item->collect(player);
         cout << "take coin" << endl;
+        cout << "money" << player->money << endl;
     }
     else if (dynamic_cast<Heart*>(item)) {
         player->health += static_cast<Heart*>(item)->value;

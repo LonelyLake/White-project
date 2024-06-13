@@ -1,7 +1,5 @@
 #pragma once
 
-
-
 //Game modes
 enum class GameModes
 {
@@ -10,8 +8,6 @@ enum class GameModes
 	TRADE,
 	UPGRADE,
 	INVENTORY,
-
-	MENU,
 };
 
 //Locations
@@ -40,6 +36,7 @@ public:
 	Clock clock;
 	float dt;
 
+	Music music;
 //Game logic:
 	
 	//Player
@@ -61,6 +58,7 @@ public:
 
 	//Test
 	bool editorMode;
+	bool menu;
 
 	//Initialization
 	void initVariables();
@@ -82,6 +80,6 @@ public:
 	void update();
 	void render();
 
-	void gameProcess();
+	void checkGameProcess();
 };
 

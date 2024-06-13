@@ -7,7 +7,12 @@
 //Initialization
 void Game::initVariables()
 {
-	
+	//Music
+	music.openFromFile("Music/Pixel 5.ogg");
+	music.setLoop(true);
+	music.setVolume(10);
+	music.play();
+
 	//Init player
 	playerTexture.loadFromFile("Images/AnimationSheet_Character.png", IntRect(0, 0, 32, 32));
 	player = new Player(this, "Knight", playerTexture);
@@ -76,22 +81,35 @@ void Game::pollEvents() {
 		case Event::KeyPressed:
 
 		//Game pause
-			if (event.key.code == Keyboard::Escape) {
-				if (!pause){
-					pause = true;
+			if (!menu) {
+				if (event.key.code == Keyboard::Escape) {
+					if (!pause) {
+						pause = true;
+					}
+					else {
+						pause = false;
+					}
 				}
-				else {
-					pause = false;
+
+				//Edtor mode
+				if (event.key.code == Keyboard::K) {
+					if (!editorMode) {
+						editorMode = true;
+					}
+					else {
+						editorMode = false;
+					}
 				}
+
 			}
 
-			//Edtor mode
-			if (event.key.code == Keyboard::K) {
+			//Menu
+			if (event.key.code == Keyboard::M) {
 				if (!editorMode) {
-					editorMode = true;
+					menu = true;
 				}
 				else {
-					editorMode = false;
+					menu = false;
 				}
 			}
 			break;
@@ -149,13 +167,15 @@ void Game::render()
 
 	
 	window->clear();
-	//Set view
-	window->setView(view);
-	//Render game
-	level->renderLevel();
+	if (!menu){
+		//Set view
+		window->setView(view);
+		//Render game
+		level->renderLevel();
 
-	// Display the rendered frame
-	window->display();
+		// Display the rendered frame
+		window->display();
+	}
 }
 
 //void Game::gameProcess()

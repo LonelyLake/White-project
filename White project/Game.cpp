@@ -1,5 +1,8 @@
 #include "stdafx.h"
 #include "Game.h"
+#include "Player.h"
+#include "Level.h"
+#include "Map.h"
 
 //Initialization
 void Game::initVariables()

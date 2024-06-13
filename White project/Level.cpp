@@ -1,6 +1,15 @@
 #include "stdafx.h"
 #include "Level.h"
 
+#include "Game.h"
+#include "Map.h"
+#include "Tile.h"
+#include "Item.h"
+#include "Coin.h"
+#include "Heart.h"
+#include "Player.h"
+
+
 
 enum class Locations;
 

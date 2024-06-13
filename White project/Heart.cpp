@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Heart.h"
-
+#include "Level.h"
+#include "Player.h"
 
 Heart::Heart(Level* level, Texture texture, int value) {
 	this->level = level;

@@ -1,6 +1,12 @@
 #include "stdafx.h"
 #include "Map.h"
-
+#include "Level.h"
+#include "Game.h"
+#include "Player.h"
+#include "Tile.h"
+#include "Item.h"
+#include "Coin.h"
+#include "Heart.h"
 
 Map::Map(Level *level)
 {

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Coin.h"
 #include "Level.h"
+#include "Player.h"
 
 Coin::Coin(Level* level, Texture texture, int value) {
 	this->level = level;

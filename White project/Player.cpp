@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "Player.h"
 #include "Game.h"
+#include "Level.h"
+#include "Map.h"
+
 
 Player::Player(Game* game, string name, Texture playerTexture)
 {

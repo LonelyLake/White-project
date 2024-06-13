@@ -5,10 +5,12 @@
 class Coin
 	: public Item
 {
-private:
+
 
 public:
-	Coin(Texture texture, int value);
+	Level* level;
+	Coin(Level* level, Texture texture, int value);
 	~Coin();
-};
 
+	void takeItem(Player* player);
+};

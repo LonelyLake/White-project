@@ -179,14 +179,14 @@ void Level::addMapItems(int itemAmount) {
     //Coin
 	 //???
 	coinTexture.loadFromFile("Images/Level/Items/Golden Coin.png");
-    Coin* goldenCoin = new Coin(coinTexture, coinValue);
+    Coin* goldenCoin = new Coin(this, coinTexture, coinValue);
     goldenCoin->sprite.setScale(1, 1);
 
     mapItems[0] = goldenCoin;
 
     //Heart
     heartTexture.loadFromFile("Images/Level/Items/Heart.png");
-    Heart* heart = new Heart(heartTexture, 1);
+    Heart* heart = new Heart(this, heartTexture, 1);
     heart->sprite.setScale(1, 1);
 
     mapItems[1] = heart;

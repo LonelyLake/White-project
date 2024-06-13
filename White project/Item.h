@@ -1,4 +1,5 @@
 #pragma once
+
 class Item
 {
 public:
@@ -22,8 +23,10 @@ public:
 
 	//Copy constructor
 	Item(const Item& sItem);
-		
+
 	//Destructor
 	virtual ~Item();
+
+	virtual void takeItem(Player* player) = 0;
 };
 

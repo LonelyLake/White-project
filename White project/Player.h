@@ -1,6 +1,8 @@
 #pragma once
 
-
+#include "Game.h"
+#include "Level.h"
+#include "Map.h"
 
 class Level;
 class Map;

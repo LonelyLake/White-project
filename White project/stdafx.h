@@ -12,17 +12,6 @@
 #include <cmath>
 #include <algorithm>
 
-
-#include "Game.h"
-#include "Menu.h"
-#include "Player.h"
-#include "Level.h"
-#include "Map.h"
-#include "Tile.h"
-#include "Item.h"
-#include "Coin.h"
-#include "Heart.h"
-
 using namespace sf;
 using namespace std;
 
@@ -34,4 +23,18 @@ template <typename T>
 constexpr T clamp(T value, T min, T max) {
     return std::max(min, std::min(value, max));
 }
+
+class Game;
+class Player;
+enum class Locations;
+class Map;
+class Tile;
+
+class Item;
+class Coin;
+class Heart;
+
+class Level;
+
+
 

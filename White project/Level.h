@@ -2,9 +2,13 @@
 
 #include "Game.h"
 #include "Map.h"
-#include "Item.h" //
+#include "Item.h"
 #include "Coin.h"
 #include "Heart.h"
+#include "Player.h"
+
+
+
 
 class Level
 {

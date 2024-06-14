@@ -48,6 +48,7 @@ public:
 	//Variables
 	Texture texture;
 	Sprite sprite;
+	char sideLook;
 
 	//Level*
 	Level* level;

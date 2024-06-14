@@ -35,6 +35,7 @@ Player::Player(Game* game, string name, Texture playerTexture)
 	sprite.setTexture(texture);
 	sprite.setScale(1.5f, 1.5f);
 	sprite.setPosition(positionX, positionY);
+	sideLook = 'l';
 
 	velocity = 10.f;
 

@@ -67,9 +67,11 @@ Level::~Level() {
         }
         if (player->controls == Controls::LEFT) {
             playerBounds.left -= player->velocity * deltaTime;
+            player->sideLook = 'l';
         }
         if (player->controls == Controls:: RIGHT) {
             playerBounds.left += player->velocity * deltaTime;
+            player->sideLook = 'r';
         }
 
 
@@ -213,7 +215,29 @@ void Level::addMapItems(int itemAmount) {
 
 void Level::updatePlayerAnimation(float deltaTime) {
     
-    if(player->controls != Controls::IDLE){
+    
+    if (player->controls != Controls::IDLE && player->sideLook == 'l') {
+        static int frameIndex = 0;
+        static float animationTimer = 0.f;
+        const float animationSpeed = 0.3f; // Fixed animation speed
+
+        animationTimer += 0.01f; // Fixed time increment
+        if (animationTimer >= animationSpeed) {
+            frameIndex = (frameIndex + 1) % 8; // Assuming 8 frames in the animation
+            animationTimer = 0.0f;
+        }
+
+        int startX = 256; // Starting x-coordinate of the animation frames
+        int startY = 160; // Starting y-coordinate of the animation frames (4th line)
+        int frameWidth = 32; // Width of each animation frame
+        int frameHeight = 32; // Height of each animation frame
+        int totalWidth = 8 * frameWidth; // Total width of the animation sheet
+
+        player->texture.loadFromFile("Images/AnimationSheet_CharacterL.png", IntRect(totalWidth - frameIndex * frameWidth - frameWidth, startY, frameWidth, frameHeight));
+        player->sprite.setTexture(player->texture);
+        player->sprite.setScale(2.5f, 2.5f);
+    }
+    else if (player->controls != Controls::IDLE && player->sideLook == 'r') {
         static int frameIndex = 0;
         static float animationTimer = 0.f;
         const float animationSpeed = 0.3f; // Fixed animation speed
@@ -232,7 +256,27 @@ void Level::updatePlayerAnimation(float deltaTime) {
         player->texture.loadFromFile("Images/AnimationSheet_Character.png", IntRect(startX + frameIndex * frameWidth, startY, frameWidth, frameHeight));
         player->sprite.setTexture(player->texture);
         player->sprite.setScale(2.5f, 2.5f);
+    }
+    else if (player->controls == Controls::IDLE && player->sideLook == 'l') {
+        static int frameIndex = 0;
+        static float animationTimer = 0.f;
+        const float animationSpeed = 1.f; // Fixed animation speed
 
+        animationTimer += 0.01f; // Fixed time increment
+        if (animationTimer >= animationSpeed) {
+            frameIndex = (frameIndex + 1) % 2; // Assuming 3 frames in the animation
+            animationTimer = 0.0f;
+        }
+
+        int startX = 0; // Starting x-coordinate of the animation frames
+        int startY = 0; // Starting y-coordinate of the animation frames (4th line)
+        int frameWidth = 32; // Width of each animation frame
+        int frameHeight = 32; // Height of each animation frame
+        int totalWidth = 8 * frameWidth; // Total width of the animation sheet
+
+        player->texture.loadFromFile("Images/AnimationSheet_CharacterL.png", IntRect(totalWidth - frameIndex * frameWidth - frameWidth, startY, frameWidth, frameHeight));
+        player->sprite.setTexture(player->texture);
+        player->sprite.setScale(2.5f, 2.5f);
     }
     else {
         static int frameIndex = 0;
@@ -249,6 +293,8 @@ void Level::updatePlayerAnimation(float deltaTime) {
         int startY = 0; // Starting y-coordinate of the animation frames (4th line)
         int frameWidth = 32; // Width of each animation frame
         int frameHeight = 32; // Height of each animation frame
+        int totalWidth = 8 * frameWidth;
+
 
         player->texture.loadFromFile("Images/AnimationSheet_Character.png", IntRect(startX + frameIndex * frameWidth, startY, frameWidth, frameHeight));
         player->sprite.setTexture(player->texture);

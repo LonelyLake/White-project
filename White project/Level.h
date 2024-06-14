@@ -81,4 +81,6 @@ public:
 
 	void nearPlayer();
 	void takeItem(Item* item);
+
+	void animateEnemy(Enemy* enemy, float deltaTime);
 };

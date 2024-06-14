@@ -14,7 +14,7 @@ Player::Player(Game* game, string name, Texture playerTexture)
 {
 	this->window = game->window;
 	this->game = game;
-	this->level;
+	this->level = game->level;
 
 	this->name = name;
 
@@ -67,4 +67,8 @@ void Player::setPosition(int x, int y) {
 	positionX = x;
 	positionY = y;
 	sprite.setPosition(positionX, positionY);
+}
+
+void Player::takeDamage(int damage) {
+	health -= damage;
 }

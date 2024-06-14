@@ -278,6 +278,9 @@ void Map::generateEnemies(vector <Enemy*> mapEnemies)
 						float enemyY = tileCenterY - (enemyHeight / 2);
 
 						enemies.back()->sprite.setPosition(enemyX, enemyY);
+						enemies.back()->positionX = enemyX;
+						enemies.back()->positionY = enemyY;
+
 						tiles[i][j].hasItem = true; // Mark the tile as having an item
 						enemiesAmount--;
 						break; // Break out of the inner loop once an item is placed

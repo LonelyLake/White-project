@@ -69,4 +69,6 @@ public:
 	//Other functions
 	void setPosition(int x, int y);
 
+	void takeDamage(int damage);
+
 };

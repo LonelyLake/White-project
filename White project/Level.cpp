@@ -134,6 +134,20 @@ Level::~Level() {
 
     updatePlayerAnimation(deltaTime);
     nearPlayer();
+
+    // Update enemies
+    for (Enemy* enemy : map->enemies) {
+        enemy->update(deltaTime);
+
+        // Check for collisions between player and enemies
+        sf::FloatRect playerBounds(player->sprite.getPosition().x, player->sprite.getPosition().y, player->sprite.getGlobalBounds().width, player->sprite.getGlobalBounds().height);
+        sf::FloatRect enemyBounds(enemy->positionX, enemy->positionY, enemy->sprite.getGlobalBounds().width, enemy->sprite.getGlobalBounds().height);
+
+        if (playerBounds.intersects(enemyBounds) && enemy->canAttack()) {
+            // Player has touched the enemy, so handle the enemy's interaction
+            player->takeDamage(enemy->damage);
+        }
+    }
 }
 
 //Player controls
@@ -406,3 +420,35 @@ void Level::takeItem(Item* item) {
     // Add more item types and their respective handling logic here
 }
 
+void Level::animateEnemy(Enemy* enemy, float deltaTime) {
+    //Implement enemy animation logic here
+        // Update enemy texture based on its animation pattern
+        // You can use a timer and frame index to control the enemy's animation
+
+        // Example: Simple enemy animation pattern (walk left and right)
+        static int frameIndex = 0;
+    static float animationTimer = 0.0f;
+    const float animationSpeed = 0.3f; // Adjust this value to control the enemy's animation speed
+
+    animationTimer += deltaTime;
+
+    if (animationTimer >= animationSpeed) {
+        animationTimer = 0.0f;
+        frameIndex = (frameIndex + 1) % 2; // Assuming 2 frames in the animation
+    }
+
+    int startX = 0; // Starting x-coordinate of the animation frames
+    int startY = 0; // Starting y-coordinate of the animation frames
+    int frameWidth = 32; // Width of each animation frame
+    int frameHeight = 32; // Height of each animation frame
+
+    if (enemy->direction == 'l') {
+        enemy->texture.loadFromFile("Images/EnemyAnimationSheet_Left.png", IntRect(startX + frameIndex * frameWidth, startY, frameWidth, frameHeight));
+    }
+    else {
+        enemy->texture.loadFromFile("Images/EnemyAnimationSheet_Right.png", IntRect(startX + frameIndex * frameWidth, startY, frameWidth, frameHeight));
+    }
+
+    enemy->sprite.setTexture(enemy->texture);
+    enemy->sprite.setScale(2.0f, 2.0f);
+}

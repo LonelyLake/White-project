@@ -23,6 +23,7 @@ public:
 	//Constructor
 	Item();
 	Item(Texture texture);
+	void setScale(float x, float y);
 
 	//Copy constructor
 	Item(const Item& sItem);

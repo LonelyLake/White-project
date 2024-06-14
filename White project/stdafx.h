@@ -40,6 +40,9 @@ class Coin;
 class Heart;
 class Key;
 
+class Enemy;
+class Skeleton;
+class Goblin;
 
 
 

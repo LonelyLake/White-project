@@ -37,4 +37,7 @@ Item::~Item() {
 
 }
 
+void Item::setScale(float x, float y) {
+    sprite.setScale(x, y);
+}
 

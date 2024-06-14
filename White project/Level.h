@@ -39,6 +39,13 @@ public:
 	Texture coinTexture;
 	Texture heartTexture;
 
+	//Enemies
+	int enemiesAmount;
+	vector <Enemy*> mapEnemies;
+
+	Texture skeletonTexture;
+	Texture goblinTexture;
+
 	//Controls
 	bool up;
 	bool down;
@@ -69,6 +76,8 @@ public:
 
 	//void checkItemCollision();
 	//void handleItemCollision(Item* item);
+
+	void addEnemies(int enemiesAmount);
 
 	void nearPlayer();
 	void takeItem(Item* item);

@@ -45,6 +45,10 @@ public:
 	vector<Item*> items;
 	int itemAmount;
 
+	//Inemies
+	vector<Enemy*> enemies;
+	int enemiesAmount;
+
 public:
 	//Tiles coordinates
 	int startX;
@@ -66,6 +70,8 @@ public:
 	//Functions
 	void generateMap(int width, int height, int tileSize);
 	void generateItems(vector <Item*> mapItems);
+
+	void generateEnemies(vector<Enemy*> mapEnemies);
 
 	void loadTileTextures();
 };

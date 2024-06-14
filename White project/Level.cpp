@@ -10,6 +10,9 @@
 #include "Key.h"
 #include "Player.h"
 #include "Inventory.h"
+#include "Enemy.h"
+#include "Skeleton.h"
+#include "Goblin.h"
 
 
 
@@ -39,6 +42,14 @@ Level::Level(Game* game)
     //Generate items on map
 	map->generateItems(mapItems);
     
+
+    //Add enemies that will apear in the level
+    enemiesAmount = 2;
+    addEnemies(enemiesAmount);
+
+	//Generate enemies on map
+	map->generateEnemies(mapEnemies);
+
 	//Game process
     isActiveKey = false;
 }
@@ -194,14 +205,12 @@ void Level::addMapItems(int itemAmount) {
 	 //???
 	coinTexture.loadFromFile("Images/Level/Items/Golden Coin.png");
     Coin* goldenCoin = new Coin(this, coinTexture, coinValue);
-    goldenCoin->sprite.setScale(1, 1);
 
     mapItems[0] = goldenCoin;
 
     //Heart
     heartTexture.loadFromFile("Images/Level/Items/Heart.png");
     Heart* heart = new Heart(this, heartTexture, 1);
-    heart->sprite.setScale(1, 1);
 
     mapItems[1] = heart;
 
@@ -210,6 +219,25 @@ void Level::addMapItems(int itemAmount) {
 	//Texture keyTexture;
 	//keyTexture.loadFromFile("Images/Level/Items/Golden Key.png");
 	//mapItems[1] = new Key(keyTexture);
+
+}
+
+void Level::addEnemies(int enemiesAmount)
+{
+    mapEnemies.resize(enemiesAmount);
+
+    //Coin
+     //???
+    skeletonTexture.loadFromFile("Images/Enemies/Skeleton enemy.png", IntRect(0, 0, 60, 40));
+    Skeleton* skeleton = new Skeleton(this, skeletonTexture, 10, 1, 1);
+
+    mapEnemies[0] = skeleton;
+
+    goblinTexture.loadFromFile("Images/Enemies/Bringer-of-Death_Idle_1.png", IntRect(80, 40, 120, 97));
+    Goblin* goblin = new Goblin(this, goblinTexture, 10, 1, 1);
+	
+
+    mapEnemies[1] = goblin;
 
 }
 
@@ -377,3 +405,4 @@ void Level::takeItem(Item* item) {
 
     // Add more item types and their respective handling logic here
 }
+

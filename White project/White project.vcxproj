@@ -137,7 +137,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Coin.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Goblin.cpp" />
     <ClCompile Include="Heart.cpp" />
     <ClCompile Include="Interface.cpp" />
     <ClCompile Include="Inventory.cpp" />
@@ -147,6 +149,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Skeleton.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
@@ -154,7 +157,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Coin.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Goblin.h" />
     <ClInclude Include="Heart.h" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="Inventory.h" />
@@ -163,6 +168,7 @@
     <ClInclude Include="Level.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Skeleton.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Tile.h" />
   </ItemGroup>

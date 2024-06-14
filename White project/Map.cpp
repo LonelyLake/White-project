@@ -8,6 +8,9 @@
 #include "Key.h"
 #include "Coin.h"
 #include "Heart.h"
+#include "Enemy.h"
+#include "Skeleton.h"
+#include "Goblin.h"
 
 Map::Map(Level *level)
 {
@@ -22,7 +25,8 @@ Map::Map(Level *level)
 	loadTileTextures();
 
 	//Init variables
-	itemAmount = 10; //Ammount items on the map
+	itemAmount = 5; //Ammount items on the map
+	enemiesAmount = 8;
 }
 
 Map::~Map()
@@ -209,7 +213,80 @@ void Map::generateItems(vector <Item*> mapItems)
 }
 
 
+void Map::generateEnemies(vector <Enemy*> mapEnemies)
+{
+	enemies.clear(); // Clear the existing items vector
 
+	float randomNumber = 0.f;
+	float chanceOfGenerating = 0.1f;
+	bool willGenerateItem = false;
+
+	while (enemiesAmount > 0) {
+		// Go through the whole map
+		for (int i = 1; i < height - 1; i++) {
+			for (int j = 1; j < width - 1; j++) {
+
+				randomNumber = (float)rand() / 101.f;
+				if (randomNumber < chanceOfGenerating) {
+					willGenerateItem = true;
+				}
+				else {
+					willGenerateItem = false;
+				}
+				// If the tile is not a wall and it does not have an item
+
+				if (tiles[i][j].wall == false && tiles[i][j].hasItem == false && willGenerateItem) {
+					int randomID = rand() % mapEnemies.size(); // Generate a random index
+					Enemy* enemy = mapEnemies[randomID]; // Get the item from the vector
+
+					Skeleton* skeleton = dynamic_cast<Skeleton*>(enemy); // Cast to Coin*
+					if (dynamic_cast<Skeleton*>(skeleton)) {
+						enemies.push_back(new Skeleton(*skeleton)); // Create a new Coin object
+						
+					}
+
+					Goblin* goblin = dynamic_cast<Goblin*>(enemy); // Cast to Coin*
+					if (dynamic_cast<Goblin*>(goblin)) {
+						enemies.push_back(new Goblin(*goblin)); // Create a new Coin object
+						
+						cout << "goblin" << endl;
+					}
+					//Heart* heart = dynamic_cast<Heart*>(skeleton); // Cast to Coin*
+					//if (dynamic_cast<Heart*>(item)) {
+					//	items.push_back(new Heart(*heart)); // Create a new Coin object
+					//}
+
+					else {
+						// Handle the case where the item is not a Coin
+						// You can add more dynamic casts for other types of items
+					}
+
+					
+
+					// Calculate the position to center the item on the tile
+					if (!enemies.empty()) {
+						float scaleFactor = 2.5f; // or any other scale factor you want
+						enemies.back()->sprite.setScale(scaleFactor, scaleFactor);
+
+						float enemyWidth = enemies.back()->sprite.getTexture()->getSize().x * scaleFactor;
+						float enemyHeight = enemies.back()->sprite.getTexture()->getSize().y * scaleFactor;
+
+						float tileCenterX = j * tileSize + (tileSize / 2);
+						float tileCenterY = i * tileSize + (tileSize / 2);
+
+						float enemyX = tileCenterX - (enemyWidth / 2);
+						float enemyY = tileCenterY - (enemyHeight / 2);
+
+						enemies.back()->sprite.setPosition(enemyX, enemyY);
+						tiles[i][j].hasItem = true; // Mark the tile as having an item
+						enemiesAmount--;
+						break; // Break out of the inner loop once an item is placed
+					}
+				}
+			}
+		}
+	}
+}
 
 
 void Map::render() {
@@ -235,6 +312,12 @@ void Map::render() {
 	}
 	
 	target->draw(lockSprite);
+
+
+	//Render enemies
+	for (auto& enemy: enemies) {
+		target->draw(enemy->sprite);
+	}
 
 	// Display the rendered frame
 	//Test

@@ -275,7 +275,7 @@ void Level::nearPlayer() {
     //Key
     FloatRect keyBounds(map->key->sprite.getPosition().x, map->key->sprite.getPosition().y, map->key->sprite.getGlobalBounds().width, map->key->sprite.getGlobalBounds().height);
 
-    if (playerBounds.intersects(keyBounds)) {
+    if (playerBounds.intersects(keyBounds )&& player->hasKey == false) {
 		// Player has touched the item, so handle the item's interaction
 		takeItem(map->key);
 	}
@@ -287,42 +287,47 @@ void Level::nearPlayer() {
         // Player has touched the item, so handle the item's interaction
         
 		player->inventory->removeItem(map->key);
+        player->hasKey = false;
         game->levelCompleted = true;
     }
 }
 
 void Level::takeItem(Item* item) {
     // Handle the interaction with the item
-    // For example, you can remove the itebegin(), mapItems.end(), item), mapItems.end());
-    //delete item;m from the mapItems vector and update the player's inventory
-    //mapItems.erase(std::remove(mapItems.
-
-    // You can also update the player's attributes based on the type of item
     if (dynamic_cast<Coin*>(item)) {
         item->takeItem(player);
-        cout << player->money << endl;
+        
+        for (auto it = map->items.begin(); it != map->items.end(); ) {
+            if (*it == item) {
+                delete* it;
+                it = map->items.erase(it);
+                break;
+            }
+            else {
+                ++it;
+            }
+        }
     }
-    else if (dynamic_cast<Heart*>(item)) {
+    else if (dynamic_cast<Heart*>(item) && player->health < player->maxHealth) {
+        
         item->takeItem(player);
         cout << player->health << endl;
-    }
+        
+            for (auto it = map->items.begin(); it != map->items.end(); ) {
+                if (*it == item) {
+                    delete* it;
+                    it = map->items.erase(it);
+                    break;
+                }
+                else {
+                    ++it;
+                }
+            }
+        }
 
     else if (dynamic_cast<Key*>(item)) {
 		item->takeItem(player);
-		cout << player->hasKey << endl;
-        //delete item;
-
-        //TEST
-        player->inventory->addItem(item);
-	}
-
-    // For example, you can remove the item from the mapItems vector and update the player's inventory
-    for (auto it = map->items.begin(); it != map->items.end(); ++it) {
-        if (*it == item && item != nullptr && item->used) {
-            map->items.erase(it);
-            delete item;
-            break;
-        }
     }
+
     // Add more item types and their respective handling logic here
 }

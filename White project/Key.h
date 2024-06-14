@@ -11,6 +11,7 @@ public:
 	~Key();
 
 	void takeItem(Player* player);
+	void useItem(Player* player);
 };
 
 

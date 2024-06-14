@@ -197,10 +197,13 @@ void Game::render()
 			level->renderLevel();
 		}
 		else if(gameMode == GameModes::INVENTORY){
+			window->setView(view);
+			level->renderLevel();
+			
 			player->inventory->render(window);
 		}
 		//Set window
-		window->setView(window->getDefaultView());
+		//window->setView(window->getDefaultView());
 
 		// Display the rendered frame
 		window->display();
@@ -209,6 +212,12 @@ void Game::render()
 
 void Game::checkGameProcess()
 {
+
+	if (currentLevel == 4 && location == Locations::CASTLE_HALL) {
+		location = Locations::CASTLE_MIDDLE;
+		cout << "New location! " << endl;
+	}
+
 	if(levelCompleted) {
 		delete level;
 		level = new Level(this);

@@ -3,8 +3,13 @@
 class Inventory {
 private:
     Player* player;
+
+    RectangleShape background;
+
     sf::Font font;
+    Text titleText;
     sf::Text inventoryText;
+
     std::vector<Item*> items;
     int selectedItemIndex;
 

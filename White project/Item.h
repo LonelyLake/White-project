@@ -17,6 +17,7 @@ public:
 	bool used;
 
 	//Parameters
+	string name;
 	int value;
 
 	//Constructor
@@ -30,5 +31,6 @@ public:
 	virtual ~Item();
 
 	virtual void takeItem(Player* player) = 0;
+	virtual void useItem(Player* player) = 0;
 };
 

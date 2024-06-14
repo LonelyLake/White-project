@@ -224,12 +224,11 @@ void Map::render() {
 	}
 
 	// Render the items
-	for (auto it = items.begin(); it != items.end(); ++it) {
-		if ((*it)->isOnMap) {
-			target->draw((*it)->sprite);
+	for (auto& item : items) {
+		if (item->isOnMap) {
+			target->draw(item->sprite);
 		}
 	}
-	//target->draw(items[0]->sprite);
 
 	if (player->hasKey == false){
 		target->draw(key->sprite);

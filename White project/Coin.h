@@ -13,4 +13,5 @@ public:
 	~Coin();
 
 	void takeItem(Player* player);
+	void useItem(Player * player);
 };

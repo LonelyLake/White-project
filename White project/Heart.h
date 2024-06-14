@@ -12,5 +12,6 @@ public:
 	~Heart();
 
 	void takeItem(Player* player);
+	void useItem(Player* player);
 };
 

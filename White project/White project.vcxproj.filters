@@ -57,6 +57,12 @@
     <ClCompile Include="Heart.cpp">
       <Filter>Game logic\Items\Misc</Filter>
     </ClCompile>
+    <ClCompile Include="Key.cpp">
+      <Filter>Game logic\Items\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>Game logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -85,6 +91,12 @@
     </ClInclude>
     <ClInclude Include="Heart.h">
       <Filter>Game logic\Items\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Key.h">
+      <Filter>Game logic\Items\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.h">
+      <Filter>Game logic</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

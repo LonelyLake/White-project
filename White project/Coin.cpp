@@ -6,6 +6,7 @@
 
 
 Coin::Coin(Level* level, Texture texture, int value) {
+	this->name = "coin";
 	this->level = level;
 	this->value = value;
 	this->texture = texture;
@@ -22,9 +23,16 @@ Coin::~Coin() {
 
 void Coin::takeItem(Player* player)
 {
+	useItem(player);
+	
+	cout << "take coin" << endl;
+}
+void Coin::useItem(Player* player)
+{
 	level->player->money += value;
 	used = true;
-	cout << "take coin" << endl;
+
+	cout << player->money << endl;
 }
 #pragma once
 

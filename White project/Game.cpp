@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Level.h"
 #include "Map.h"
+#include "Inventory.h"
 
 //Initialization
 void Game::initVariables()
@@ -30,6 +31,7 @@ void Game::initVariables()
 	
 	//Init level
 	currentLevel = 1;
+	levelCompleted = false;
 	level = new Level(this);
 
 	//Set player to level
@@ -90,6 +92,16 @@ void Game::pollEvents() {
 						pause = false;
 					}
 				}
+				if (event.key.code == Keyboard::I) {
+					if (gameMode != GameModes::INVENTORY) {
+						previousGameMode = gameMode;
+						gameMode = GameModes::INVENTORY;
+					}
+					else {
+						//gameMode = previousGameMode;
+						gameMode = previousGameMode;
+					}
+				}
 
 				//Edtor mode
 				if (event.key.code == Keyboard::K) {
@@ -126,6 +138,8 @@ void Game::update()
 	// Delta time calculation
 	dt = clock.restart().asSeconds();;
 
+	checkGameProcess();
+
 	//Update game objects
 	if (!pause) {
 		//Update player
@@ -139,6 +153,10 @@ void Game::update()
 		case GameModes::TRAVEL:
 			level->update(dt);
 			break;
+		case GameModes::INVENTORY: {
+			
+			break;
+			}
 		}
 	}
 
@@ -151,6 +169,9 @@ void Game::update()
 		view.setSize(window->getSize().x, window->getSize().y);
 		player->velocity = 400.f;
 	}
+
+	
+
 }
 
 //Render
@@ -169,16 +190,31 @@ void Game::render()
 	window->clear();
 	if (!menu){
 		//Set view
-		window->setView(view);
+		
 		//Render game
-		level->renderLevel();
+		if (gameMode == GameModes::TRAVEL){
+			window->setView(view);
+			level->renderLevel();
+		}
+		else if(gameMode == GameModes::INVENTORY){
+			player->inventory->render(window);
+		}
+		//Set window
+		window->setView(window->getDefaultView());
 
 		// Display the rendered frame
 		window->display();
 	}
 }
 
-//void Game::gameProcess()
-//{
-//	if()
-//}
+void Game::checkGameProcess()
+{
+	if(levelCompleted) {
+		delete level;
+		level = new Level(this);
+		gameMode = GameModes::TRAVEL;
+
+		currentLevel++;
+		levelCompleted = false;
+	}
+}

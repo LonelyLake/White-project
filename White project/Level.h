@@ -9,6 +9,9 @@ public:
 	//Window
 	RenderWindow* target;
 
+	//Game
+	Game* game;
+
 	//Player
 	Player* player;
 
@@ -24,6 +27,9 @@ public:
 	Map* map;
 	int tileSize;
 	int newXTile;
+
+	//Interaction
+
 
 	//Items
 	int itemAmount;
@@ -64,6 +70,6 @@ public:
 	//void checkItemCollision();
 	//void handleItemCollision(Item* item);
 
-	void nearItems();
+	void nearPlayer();
 	void takeItem(Item* item);
 };

@@ -15,6 +15,7 @@ public:
 
 	//Levels
 	Locations location;
+	Level* level;
 	int* currentLevel;
 
 	//Size
@@ -34,8 +35,8 @@ public:
 	Sprite emptySprite;
 	Texture emptyTexture;
 
-	Sprite secretSprite;
-	Texture secretTexture;
+	Key* key;
+	Texture keyTexture;
 
 	Sprite lockSprite;
 	Texture lockTexture;

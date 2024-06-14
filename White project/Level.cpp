@@ -7,7 +7,9 @@
 #include "Item.h"
 #include "Coin.h"
 #include "Heart.h"
+#include "Key.h"
 #include "Player.h"
+#include "Inventory.h"
 
 
 
@@ -16,6 +18,7 @@ enum class Locations;
 Level::Level(Game* game)
 {
     //Take data from game
+    this->game = game;
     this->player = game->player;
     this->currentLevel = &game->currentLevel;
     this->target = game->window;
@@ -117,7 +120,7 @@ Level::~Level() {
     player->positionYTile = static_cast<int>(playerBounds.top) / map->tileSize;
 
     updatePlayerAnimation(deltaTime);
-    nearItems();
+    nearPlayer();
 }
 
 //Player controls
@@ -256,9 +259,10 @@ void Level::updatePlayerAnimation(float deltaTime) {
         
 }
 
-void Level::nearItems() {
+void Level::nearPlayer() {
+     sf::FloatRect playerBounds(player->sprite.getPosition().x, player->sprite.getPosition().y, player->sprite.getGlobalBounds().width, player->sprite.getGlobalBounds().height);
+       
     for (Item* item : map->items) {
-        sf::FloatRect playerBounds(player->sprite.getPosition().x, player->sprite.getPosition().y, player->sprite.getGlobalBounds().width, player->sprite.getGlobalBounds().height);
         sf::FloatRect itemBounds(item->sprite.getPosition().x, item->sprite.getPosition().y, item->sprite.getGlobalBounds().width, item->sprite.getGlobalBounds().height);
 
         if (playerBounds.intersects(itemBounds)) {
@@ -267,27 +271,54 @@ void Level::nearItems() {
             break;
         }
     }
+
+    //Key
+    FloatRect keyBounds(map->key->sprite.getPosition().x, map->key->sprite.getPosition().y, map->key->sprite.getGlobalBounds().width, map->key->sprite.getGlobalBounds().height);
+
+    if (playerBounds.intersects(keyBounds)) {
+		// Player has touched the item, so handle the item's interaction
+		takeItem(map->key);
+	}
+
+    //Door
+    FloatRect doorBounds(map->lockSprite.getPosition().x, map->lockSprite.getPosition().y, map->lockSprite.getGlobalBounds().width * 1.2f, map->lockSprite.getGlobalBounds().height * 1.2f);
+
+    if (playerBounds.intersects(doorBounds) && player->hasKey == true) {
+        // Player has touched the item, so handle the item's interaction
+        
+		player->inventory->removeItem(map->key);
+        game->levelCompleted = true;
+    }
 }
 
 void Level::takeItem(Item* item) {
     // Handle the interaction with the item
-    // For example, you can remove the item from the mapItems vector and update the player's inventory
-    //mapItems.erase(std::remove(mapItems.begin(), mapItems.end(), item), mapItems.end());
-    //delete item;
+    // For example, you can remove the itebegin(), mapItems.end(), item), mapItems.end());
+    //delete item;m from the mapItems vector and update the player's inventory
+    //mapItems.erase(std::remove(mapItems.
 
     // You can also update the player's attributes based on the type of item
     if (dynamic_cast<Coin*>(item)) {
-        player->money += static_cast<Coin*>(item)->value;
-        cout << "take coin" << endl;
+        item->takeItem(player);
+        cout << player->money << endl;
     }
     else if (dynamic_cast<Heart*>(item)) {
-        player->health += static_cast<Heart*>(item)->value;
-		cout << "take heart" << endl;
+        item->takeItem(player);
+        cout << player->health << endl;
     }
+
+    else if (dynamic_cast<Key*>(item)) {
+		item->takeItem(player);
+		cout << player->hasKey << endl;
+        //delete item;
+
+        //TEST
+        player->inventory->addItem(item);
+	}
 
     // For example, you can remove the item from the mapItems vector and update the player's inventory
     for (auto it = map->items.begin(); it != map->items.end(); ++it) {
-        if (*it == item) {
+        if (*it == item && item != nullptr && item->used) {
             map->items.erase(it);
             delete item;
             break;

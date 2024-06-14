@@ -14,6 +14,7 @@ public:
 
 	//
 	bool isOnMap;
+	bool used;
 
 	//Parameters
 	int value;

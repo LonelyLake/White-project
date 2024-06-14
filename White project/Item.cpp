@@ -10,6 +10,7 @@ Item::Item(Texture texture)
     this->texture = texture;
     this->sprite = Sprite(texture);
     this->isOnMap = false;
+    used = false;
     sprite.setTexture(texture);
     isOnMap = false;
 }

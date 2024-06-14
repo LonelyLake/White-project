@@ -49,11 +49,14 @@ public:
 
 	//Game mode
 	GameModes gameMode;
+	GameModes previousGameMode;
 	bool pause;
 
 	//Game world mechanics
 	Locations location;
+
 	int currentLevel;
+	bool levelCompleted;
 	Level* level;
 
 	//Test

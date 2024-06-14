@@ -1,16 +1,16 @@
 #pragma once
 
-
-
-class Coin
+class Key
 	: public Item
 {
 
 
 public:
 	Level* level;
-	Coin(Level* level, Texture texture, int value);
-	~Coin();
+	Key(Level* level, Texture texture);
+	~Key();
 
 	void takeItem(Player* player);
 };
+
+

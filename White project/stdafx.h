@@ -34,8 +34,9 @@ class Tile;
 class Item;
 class Coin;
 class Heart;
+class Key;
 
-
+class Inventory;
 
 
 

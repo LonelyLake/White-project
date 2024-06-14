@@ -1,8 +1,12 @@
 #include "stdafx.h"
-#include "Player.h"
+
 #include "Game.h"
+#include "Player.h"
+#include "Inventory.h"
 #include "Level.h"
 #include "Map.h"
+#include "Item.h"
+
 
 
 Player::Player(Game* game, string name, Texture playerTexture)
@@ -11,6 +15,17 @@ Player::Player(Game* game, string name, Texture playerTexture)
 	
 
 	this->name = name;
+
+	//Stats
+	health = 8;
+	maxHealth = 10;
+
+	money = 0;
+
+	//Inventory
+	inventory = new Inventory(this);
+	hasKey = false;
+
 	this->texture = playerTexture;
 	positionX = 0.f;
 	positionY = 0.f;

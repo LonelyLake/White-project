@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Tile.h"
 #include "Item.h"
+#include "Key.h"
 #include "Coin.h"
 #include "Heart.h"
 
@@ -12,6 +13,7 @@ Map::Map(Level *level)
 {
 	//Map
 	this->location = level->location;
+	this->level = level;
 	this->currentLevel = level->currentLevel;
 	this->player = level->player;
 	this->target = level->target;
@@ -128,7 +130,13 @@ void Map::generateMap(int width, int height, int tileSize)
 		//Secret and lock
 		secretX = linia3X;
 
-		secretSprite.setPosition(secretX * tileSize, secretY * tileSize);
+		//tworzenie klucza
+		key = new Key(level, keyTexture);
+
+		secretX = secretX * tileSize + (tileSize / 2) - (key->sprite.getTexture()->getSize().x / 2);
+		secretY = secretY * tileSize + (tileSize / 2) - (key->sprite.getTexture()->getSize().y / 2);
+		key->sprite.setPosition(secretX, secretY);
+		key->sprite.scale(1.5f, 1.5f);
 		//tiles[secretY][secretX] = secret_icon;
 
 		//koniec
@@ -223,7 +231,10 @@ void Map::render() {
 	}
 	//target->draw(items[0]->sprite);
 
-	target->draw(secretSprite);
+	if (player->hasKey == false){
+		target->draw(key->sprite);
+	}
+	
 	target->draw(lockSprite);
 
 	// Display the rendered frame
@@ -242,9 +253,7 @@ void Map::loadTileTextures() {
 	emptySprite.setTexture(emptyTexture);
 	emptySprite.setScale(tileScale, tileScale);
 
-	secretTexture.loadFromFile("Images/Map/Items/Golden Key.png");
-	secretSprite.setTexture(secretTexture);
-	secretSprite.setScale(2, 2);
+	keyTexture.loadFromFile("Images/Map/Items/Golden Key.png");
 
 	lockTexture.loadFromFile("Images/Map/Tiles/door_closed.png");
 	lockSprite.setTexture(lockTexture);

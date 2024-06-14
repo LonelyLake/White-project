@@ -1,9 +1,5 @@
 #pragma once
 
-
-class Level;
-class Map;
-
 enum class Controls
 {
 	IDLE,
@@ -14,6 +10,7 @@ enum class Controls
 };
 
 
+
 class Player
 {
 
@@ -22,12 +19,15 @@ public:
 
 	//Stats
 	int health;
-	int masHealth;;
+	int maxHealth;;
 	int damage;
 
 	float velocity;
 
 	int money;
+
+	Inventory* inventory;
+	bool hasKey;
 
 	//Position of the player on the map.
 	float positionX;

@@ -1,7 +1,9 @@
 #include "stdafx.h"
+#include "Item.h"
 #include "Coin.h"
 #include "Level.h"
 #include "Player.h"
+
 
 Coin::Coin(Level* level, Texture texture, int value) {
 	this->level = level;
@@ -9,6 +11,7 @@ Coin::Coin(Level* level, Texture texture, int value) {
 	this->texture = texture;
 
 	isOnMap = false;
+	used = false;
 
 	sprite.setTexture(this->texture);
 }
@@ -20,6 +23,7 @@ Coin::~Coin() {
 void Coin::takeItem(Player* player)
 {
 	level->player->money += value;
+	used = true;
 	cout << "take coin" << endl;
 }
 #pragma once

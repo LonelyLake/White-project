@@ -139,7 +139,9 @@
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Heart.cpp" />
+    <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Key.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -153,7 +155,9 @@
     <ClInclude Include="Coin.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Heart.h" />
+    <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="Key.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Player.h" />

@@ -2,6 +2,7 @@
 
 #include "Game.h"
 #include "Player.h"
+#include "Interface.h"
 #include "Inventory.h"
 #include "Level.h"
 #include "Map.h"
@@ -12,9 +13,12 @@
 Player::Player(Game* game, string name, Texture playerTexture)
 {
 	this->window = game->window;
-	
+	this->game = game;
+	this->level;
 
 	this->name = name;
+
+	interface = new Interface(this);
 
 	//Stats
 	health = 8;

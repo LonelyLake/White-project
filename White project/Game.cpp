@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Game.h"
 #include "Player.h"
+#include "Interface.h"
 #include "Level.h"
 #include "Map.h"
 #include "Inventory.h"
@@ -13,6 +14,7 @@ void Game::initVariables()
 	music.setLoop(true);
 	music.setVolume(10);
 	music.play();
+
 
 	//Init player
 	playerTexture.loadFromFile("Images/AnimationSheet_Character.png", IntRect(0, 0, 32, 32));
@@ -148,6 +150,8 @@ void Game::update()
 		// Update the view's center
 		view.setCenter(player->positionX,  player->positionY);
 
+		player->interface->update(dt);
+
 		//Update travel mode
 		switch (gameMode) {
 		case GameModes::TRAVEL:
@@ -202,6 +206,7 @@ void Game::render()
 			
 			player->inventory->render(window);
 		}
+		player->interface->render(window);
 		//Set window
 		//window->setView(window->getDefaultView());
 

@@ -66,6 +66,9 @@
     <ClCompile Include="Inventory.cpp">
       <Filter>Game logic\Player</Filter>
     </ClCompile>
+    <ClCompile Include="Interface.cpp">
+      <Filter>Game logic\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -99,6 +102,9 @@
       <Filter>Game logic\Player</Filter>
     </ClInclude>
     <ClInclude Include="Inventory.h">
+      <Filter>Game logic\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface.h">
       <Filter>Game logic\Player</Filter>
     </ClInclude>
   </ItemGroup>

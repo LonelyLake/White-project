@@ -17,6 +17,9 @@ class Player
 public:
 	string name;
 
+	Game* game;
+	Interface* interface;
+
 	//Stats
 	int health;
 	int maxHealth;;

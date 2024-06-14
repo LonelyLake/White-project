@@ -216,7 +216,7 @@ void Level::updatePlayerAnimation(float deltaTime) {
     if(player->controls != Controls::IDLE){
         static int frameIndex = 0;
         static float animationTimer = 0.f;
-        const float animationSpeed = 0.1f; // Fixed animation speed
+        const float animationSpeed = 0.3f; // Fixed animation speed
 
         animationTimer += 0.01f; // Fixed time increment
         if (animationTimer >= animationSpeed) {
@@ -237,7 +237,7 @@ void Level::updatePlayerAnimation(float deltaTime) {
     else {
         static int frameIndex = 0;
         static float animationTimer = 0.f;
-        const float animationSpeed = 0.5f; // Fixed animation speed
+        const float animationSpeed = 1.f; // Fixed animation speed
 
         animationTimer += 0.01f; // Fixed time increment
         if (animationTimer >= animationSpeed) {

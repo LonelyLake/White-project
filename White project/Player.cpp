@@ -24,6 +24,8 @@ Player::Player(Game* game, string name, Texture playerTexture)
 	//Stats
 	health = 8;
 	maxHealth = 10;
+	damage = 3;
+
 
 	money = 0;
 
@@ -73,7 +75,8 @@ void Player::setPosition(int x, int y) {
 }
 
 void Player::attack(Enemy *enemy) {
-	int damage = 2; // default attack damage
+	// default attack damage
+	
 	enemy->takeDamage(damage);
 	cout << "Player attacks enemy for " << damage << " damage!" << endl;
 }

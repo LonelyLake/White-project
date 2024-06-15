@@ -17,6 +17,8 @@ public:
     Text actionText;
     bool playerTurnActive = true;
 
+    sf::Text statusText;
+
     Text winText;
     Text loseText;
 

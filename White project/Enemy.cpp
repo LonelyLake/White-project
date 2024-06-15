@@ -127,8 +127,8 @@ void Enemy:: block() {
 }
 
 void Enemy::specialAttack(Player* player) {
-    int damage = 6; // triple attack damage
-    player->takeDamage(damage);
+    // triple attack damage
+    player->takeDamage(damage * 3);
     cout << "Enemy uses special attack on player for " << damage << " damage!" << endl;
 }
 

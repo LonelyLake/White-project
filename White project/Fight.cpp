@@ -39,7 +39,7 @@ void Fight::startFight()
 
     actionText.setFont(font);
 	actionText.setCharacterSize(24);
-	actionText.setPosition(50, 260);
+	actionText.setPosition(50, 300);
     actionText.setFillColor(Color::Red);
     actionText.setString("Choose an action: 1. Attack, 2. Block, 3. Special Attack");
 
@@ -50,6 +50,10 @@ void Fight::startFight()
     loseText.setFont(font);
     loseText.setCharacterSize(48);
     loseText.setPosition(200, 200);
+
+    statusText.setFont(font);
+    statusText.setCharacterSize(24);
+    statusText.setPosition(200, 260);
 
     Clock clock;
 
@@ -67,6 +71,8 @@ void Fight::startFight()
 
 void Fight::playerTurn() {
     sf::Event event;
+	statusText.setString("Player's turn");
+    render(window);
 
     while (true) {
         while (window->pollEvent(event)) {
@@ -79,7 +85,9 @@ void Fight::playerTurn() {
 
                     actionText.setString("Player attacks");
                     render(window); // Update the actionText
+                    
                     window->display(); // Update the window to display the changes
+                    sleep(seconds(2)); // Add 2-second delay
 
                     return;
                 }
@@ -89,6 +97,7 @@ void Fight::playerTurn() {
                     actionText.setString("Player blocks");
                     render(window); // Update the actionText
                     window->display(); // Update the window to display the changes
+                    sleep(seconds(2)); // Add 2-second delay
 
                     return;
                 }
@@ -98,21 +107,31 @@ void Fight::playerTurn() {
                     actionText.setString("Player uses special attack");
                     render(window); // Update the actionText
                     window->display(); // Update the window to display the changes
+                    sleep(seconds(2)); // Add 2-second delay
 
                     return;
                 }
             }
         }
 
-        render(window); // Render the actionText
-        window->display(); // Update the window to display the changes
+        //render(window); // Render the actionText
     }
 }
 
 void Fight::enemyTurn() {
     playerTurnActive = false;
+    statusText.setString("Enemy's turn");
+    render(window); // Update the actionText
+    window->display();
 
-    int choice = rand() % 3; // random choice
+    int choice;
+    if (!enemyPrepareSpecialAttack){
+        choice = rand() % 3; // random choice
+    }
+    else {
+        choice = 2;
+    }
+
     switch (choice) {
     case 0:
         enemy->attack(player);
@@ -135,7 +154,7 @@ void Fight::enemyTurn() {
     case 2:
         if (!enemyPrepareSpecialAttack) {
             cout << "Enemy prepares special attack!" << endl;
-            enemy->specialAttack(player);
+            //enemy->specialAttack(player);
             enemyPrepareSpecialAttack = true;
 
             actionText.setString("Enemy prepares special attack!");
@@ -146,7 +165,7 @@ void Fight::enemyTurn() {
         else if (enemyPrepareSpecialAttack) {
             cout << "Enemy uses special attack!" << endl;
             enemy->specialAttack(player);
-            enemyPrepareSpecialAttack = true;
+            enemyPrepareSpecialAttack = false;
 
             actionText.setString("Enemy uses special attack!");
             render(window); // Update the actionText
@@ -189,8 +208,10 @@ void Fight::update()
     else {
         actionText.setString("");
     }
-
-    playerTurn();
+    
+    if (player->health > 0) {
+        playerTurn();
+    }
 
     if (enemy->health > 0) {
         enemyTurn();
@@ -215,16 +236,14 @@ void Fight::update()
         window->draw(actionText);
 
         if (player->health > 0 && enemy->health > 0) {
-            sf::Text statusText;
-            statusText.setFont(font);
-            statusText.setCharacterSize(24);
-            statusText.setPosition(200, 300);
-            if (player->blockDamage) {
+           
+            
+            /*if (player->blockDamage) {
                 statusText.setString("Player is blocking");
-            }
-            else {
+            }*/
+            /*else {
                 statusText.setString("Player's turn");
-            }
+            }*/
             window->draw(statusText);
         }
         else if (player->health > 0) {

@@ -23,6 +23,7 @@ Level::Level(Game* game)
     //Take data from game
     this->game = game;
     this->player = game->player;
+    this->gamemode = &game->gameMode;
     this->currentLevel = &game->currentLevel;
     this->target = game->window;
     this->location = game->location;

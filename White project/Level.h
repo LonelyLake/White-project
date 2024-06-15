@@ -14,6 +14,7 @@ public:
 
 	//Player
 	Player* player;
+	GameModes* gamemode;
 
 	//Location
 	Locations location;

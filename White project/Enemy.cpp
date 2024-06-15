@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "Game.h"
 #include "Enemy.h"
 #include "Level.h"
 #include "Player.h"
@@ -40,8 +41,6 @@ Enemy::Enemy(const Enemy& other) {
 Enemy::~Enemy() {}
 
 void Enemy::update(float deltaTime) {
-    // Update enemy movement
-    move(deltaTime);
 
     // Update enemy attack
     attack(deltaTime);
@@ -95,7 +94,7 @@ void Enemy::update(float deltaTime) {
         if (distance <= attackRange && attackTimer >= attackDelay) {
             attackTimer = 0.0f;
             // Perform enemy attack (e.g., reduce player's health)
-            level->player->takeDamage(damage);
+            *level->gamemode = GameModes::FIGHT;
         }
     }
 
@@ -105,4 +104,13 @@ bool Enemy::canAttack() {
         return true; // Enemy can attack
     }
     return false; // Enemy cannot attack yet
+}
+
+bool Enemy::reverseDirection() {
+    if(direction == 'l') {
+		direction = 'r';
+	} else {
+		direction = 'l';
+	}
+	return true;
 }

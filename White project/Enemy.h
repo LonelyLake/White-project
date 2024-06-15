@@ -32,5 +32,7 @@ public:
 	void attack(float deltaTime);
 
 	bool canAttack();
+
+	bool reverseDirection();
 };
 

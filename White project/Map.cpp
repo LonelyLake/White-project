@@ -265,7 +265,7 @@ void Map::generateEnemies(vector <Enemy*> mapEnemies)
 
 					// Calculate the position to center the item on the tile
 					if (!enemies.empty()) {
-						float scaleFactor = 2.5f; // or any other scale factor you want
+						float scaleFactor = 2.f; // or any other scale factor you want
 						enemies.back()->sprite.setScale(scaleFactor, scaleFactor);
 
 						float enemyWidth = enemies.back()->sprite.getTexture()->getSize().x * scaleFactor;

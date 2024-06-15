@@ -25,6 +25,7 @@ constexpr T clamp(T value, T min, T max) {
 }
 
 class Game;
+enum class GameModes;
 
 class Player;
 class Inventory;

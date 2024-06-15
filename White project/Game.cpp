@@ -214,7 +214,7 @@ void Game::render()
 			view.setCenter(260, 230);
 			view.setSize(600, 400);
 			window->setView(view);
-			level->fight->render(window);
+			//level->fight->render(window);
 
 			if (level->fight->playerWon) {
 				gameMode = GameModes::TRAVEL;

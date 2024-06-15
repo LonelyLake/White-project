@@ -34,6 +34,15 @@ void Fight::startFight()
     enemyHealthText.setCharacterSize(24);
     enemyHealthText.setPosition(300, 50);
 
+    playerHealthText.setString("Player Health: " + std::to_string(player->health));
+    enemyHealthText.setString("Enemy Health: " + std::to_string(enemy->health));
+
+    actionText.setFont(font);
+	actionText.setCharacterSize(24);
+	actionText.setPosition(50, 260);
+    actionText.setFillColor(Color::Red);
+    actionText.setString("Choose an action: 1. Attack, 2. Block, 3. Special Attack");
+
     winText.setFont(font);
     winText.setCharacterSize(48);
     winText.setPosition(200, 200);
@@ -42,9 +51,9 @@ void Fight::startFight()
     loseText.setCharacterSize(48);
     loseText.setPosition(200, 200);
 
-    sf::Clock clock;
+    Clock clock;
 
-    int turnCount = 0;
+    /*int turnCount = 0;
     while (player->health > 0 && enemy->health > 0 && 0 && turnCount < maxTurns) {
         sf::Time elapsed = clock.restart();
         update();
@@ -53,82 +62,148 @@ void Fight::startFight()
         sf::sleep(sf::seconds(1.0f / 60.0f) - elapsed);
 
         turnCount++;
+    }*/
+}
+
+void Fight::playerTurn() {
+    sf::Event event;
+
+    while (true) {
+        while (window->pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                window->close();
+            }
+            if (event.type == sf::Event::KeyPressed) {
+                if (event.key.code == sf::Keyboard::Num1) {
+                    player->attack(enemy);
+
+                    actionText.setString("Player attacks");
+                    render(window); // Update the actionText
+                    window->display(); // Update the window to display the changes
+
+                    return;
+                }
+                else if (event.key.code == sf::Keyboard::Num2) {
+                    player->block();
+
+                    actionText.setString("Player blocks");
+                    render(window); // Update the actionText
+                    window->display(); // Update the window to display the changes
+
+                    return;
+                }
+                else if (event.key.code == sf::Keyboard::Num3) {
+                    player->specialAttack(enemy);
+
+                    actionText.setString("Player uses special attack");
+                    render(window); // Update the actionText
+                    window->display(); // Update the window to display the changes
+
+                    return;
+                }
+            }
+        }
+
+        render(window); // Render the actionText
+        window->display(); // Update the window to display the changes
     }
 }
 
-    void Fight::playerTurn() {
-        sf::Event event;
-        while (true) {
-            while (window->pollEvent(event)) {
-                if (event.type == sf::Event::Closed) {
-                    window->close();
-                }
-                if (event.type == sf::Event::KeyPressed) {
-                    if (event.key.code == sf::Keyboard::Num1) {
-                        player->attack(enemy);
-                        return;
-                    }
-                    else if (event.key.code == sf::Keyboard::Num2) {
-                        player->block();
-                        return;
-                    }
-                    else if (event.key.code == sf::Keyboard::Num3) {
-                        player->specialAttack(enemy);
-                        return;
-                    }
-                }
-            }
-        }
-    }
+void Fight::enemyTurn() {
+    playerTurnActive = false;
 
-    void Fight::enemyTurn() {
-        int choice = rand() % 3; // random choice
-        switch (choice) {
-        case 0:
+    int choice = rand() % 3; // random choice
+    switch (choice) {
+    case 0:
+        enemy->attack(player);
+        //sf::sleep(sf::seconds(2)); // add 2-second delay
+
+        actionText.setString("Enemy attacks");
+        render(window); // Update the actionText
+        window->display(); // Update the window to display the changes
+
+        break;
+    case 1:
+        enemy->block();
+        //sf::sleep(sf::seconds(2)); // add 2-second delay
+
+        actionText.setString("Enemy blocks");
+        render(window); // Update the actionText
+        window->display(); // Update the window to display the changes
+
+        break;
+    case 2:
+        if (!enemyPrepareSpecialAttack) {
+            cout << "Enemy prepares special attack!" << endl;
+            enemy->specialAttack(player);
+            enemyPrepareSpecialAttack = true;
+
+            actionText.setString("Enemy prepares special attack!");
+            render(window); // Update the actionText
+            window->display(); // Update the window to display the changes
+
+        }
+        else if (enemyPrepareSpecialAttack) {
+            cout << "Enemy uses special attack!" << endl;
+            enemy->specialAttack(player);
+            enemyPrepareSpecialAttack = true;
+
+            actionText.setString("Enemy uses special attack!");
+            render(window); // Update the actionText
+            window->display(); // Update the window to display the changes
+
+        }
+        else {
             enemy->attack(player);
-            break;
-        case 1:
-            enemy->block();
-            break;
-        case 2:
-            if (true/*player->canSeeSpecialAttack()*/) {
-                cout << "Enemy is preparing a special attack!" << endl;
-                enemy->specialAttack(player);
-            }
-            else {
-                enemy->attack(player);
-            }
-            break;
+
+            actionText.setString("Enemy attack!");
+            render(window); // Update the actionText
+            window->display(); // Update the window to display the changes
+
         }
+
+        break;
+    }
+}
+
+void Fight::update()
+{
+    if (player->health <= 0) {
+        // The fight is over, so we can exit the loop
+        cout << "Fight is over!" << endl;
+        playerLost = true;
+    }
+    else if (enemy->health <= 0) {
+        // The fight is over, so we can exit the loop
+        cout << "Fight is over!" << endl;
+        playerWon = true;
+
+        enemy->isDead = true;
+        delete enemy;
+        level->fightStarted = false;
     }
 
-
-    void Fight::update()
-    {
-        if (player->health <= 0) {
-            // The fight is over, so we can exit the loop
-            cout << "Fight is over!" << endl;
-            playerLost = true;
-        }
-        else if (enemy->health <= 0) {
-            // The fight is over, so we can exit the loop
-            cout << "Fight is over!" << endl;
-            playerWon = true;
-
-            enemy->isDead = true;
-            delete enemy;
-            level->fightStarted = false;
-        }
-
-        playerTurn();
-        if (enemy->health > 0) {
-            enemyTurn();
-        }
-
-        playerHealthText.setString("Player Health: " + std::to_string(player->health));
-        enemyHealthText.setString("Enemy Health: " + std::to_string(enemy->health));
+    if (playerTurnActive) {
+        actionText.setString("Choose an action: 1. Attack, 2. Block, 3. Special Attack");
     }
- 
+    else {
+        actionText.setString("");
+    }
+
+    playerTurn();
+
+    if (enemy->health > 0) {
+        enemyTurn();
+    }
+
+    playerHealthText.setString("Player Health: " + std::to_string(player->health));
+    enemyHealthText.setString("Enemy Health: " + std::to_string(enemy->health));
+
+    render(window); // Render the action text and other elements
+    window->display(); // Display the rendered frame
+}
+
+
     void Fight::render(sf::RenderWindow* window)
     {
         window->clear(Color::Black);
@@ -136,6 +211,8 @@ void Fight::startFight()
         window->draw(enemySprite);
         window->draw(playerHealthText);
         window->draw(enemyHealthText);
+
+        window->draw(actionText);
 
         if (player->health > 0 && enemy->health > 0) {
             sf::Text statusText;

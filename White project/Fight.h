@@ -14,6 +14,9 @@ public:
     Text playerHealthText;
     Text enemyHealthText;
     
+    Text actionText;
+    bool playerTurnActive = true;
+
     Text winText;
     Text loseText;
 
@@ -30,6 +33,8 @@ public:
 
     bool playerWon;
     bool playerLost;
+
+    bool enemyPrepareSpecialAttack = false;
 
 public:
     void playerTurn();

@@ -16,6 +16,9 @@ public:
 	Player* player;
 	GameModes* gamemode;
 
+	Fight* fight;
+	bool fightStarted;
+
 	//Location
 	Locations location;
 
@@ -66,6 +69,7 @@ public:
 	//Update
 	void update(float deltaTime);
 	void updatePlayerAnimation(float deltaTime);
+	void updateEnemies();
 	//Input
 	void input(float deltaTime);
 	//Render

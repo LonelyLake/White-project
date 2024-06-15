@@ -5,6 +5,8 @@ class Enemy
 public:
 	Level* level;
 
+	bool isDead = false;
+
 	int health;
 	int damage;
 	int speed;

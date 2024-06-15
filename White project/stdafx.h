@@ -45,5 +45,7 @@ class Enemy;
 class Skeleton;
 class Goblin;
 
+class Fight;
+
 
 

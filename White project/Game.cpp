@@ -5,6 +5,7 @@
 #include "Level.h"
 #include "Map.h"
 #include "Inventory.h"
+#include "Fight.h"
 
 //Initialization
 void Game::initVariables()
@@ -157,10 +158,13 @@ void Game::update()
 		case GameModes::TRAVEL:
 			level->update(dt);
 			break;
-		case GameModes::INVENTORY: {
+		case GameModes::INVENTORY: 
 			
 			break;
-			}
+		case GameModes::FIGHT:
+			level->fight->update();
+
+			break;
 		}
 	}
 
@@ -196,16 +200,31 @@ void Game::render()
 		//Set view
 		
 		//Render game
-		if (gameMode == GameModes::TRAVEL){
+		if (gameMode == GameModes::TRAVEL) {
 			window->setView(view);
 			level->renderLevel();
 		}
-		else if(gameMode == GameModes::INVENTORY){
+		else if (gameMode == GameModes::INVENTORY) {
 			window->setView(view);
 			level->renderLevel();
-			
+
 			player->inventory->render(window);
 		}
+		else if (gameMode == GameModes::FIGHT) {
+			view.setCenter(260, 230);
+			view.setSize(600, 400);
+			window->setView(view);
+			level->fight->render(window);
+
+			if (level->fight->playerWon) {
+				gameMode = GameModes::TRAVEL;
+			}
+			else if (level->fight->playerLost) {
+			gameMode = GameModes::DEATH;
+			}
+		}
+
+
 		player->interface->render(window);
 		//Set window
 		//window->setView(window->getDefaultView());

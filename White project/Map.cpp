@@ -25,8 +25,8 @@ Map::Map(Level *level)
 	loadTileTextures();
 
 	//Init variables
-	itemAmount = 5; //Ammount items on the map
-	enemiesAmount = 8;
+	itemAmount = 8; //Ammount items on the map
+	enemiesAmount = 3;
 }
 
 Map::~Map()

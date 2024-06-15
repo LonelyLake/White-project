@@ -8,6 +8,7 @@ enum class GameModes
 	TRADE,
 	UPGRADE,
 	INVENTORY,
+	DEATH
 };
 
 //Locations

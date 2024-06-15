@@ -2,15 +2,41 @@
 
 class Fight {
 public:
-    Fight(Player* player, Enemy* enemy) : player(player), enemy(enemy) {}
+    //VAriables
+    sf::Texture playerTexture;
+    Sprite playerSprite;
 
+    Texture enemyTexture;
+    Sprite enemySprite;
+
+    Font font;
+
+    Text playerHealthText;
+    Text enemyHealthText;
+    
+    Text winText;
+    Text loseText;
+
+
+    Fight(Level*level, Player* player, Enemy* enemy, int maxTurns);
+    RenderWindow* window;
+    Level* level;
+
+    Player* player;
+	Enemy* enemy;
+
+    int maxTurns;
     void startFight();
 
-private:
+    bool playerWon;
+    bool playerLost;
+
+public:
     void playerTurn();
 
     void enemyTurn();
 
-    Player* player;
-    Enemy* enemy;
+    void update();
+
+    void render(sf::RenderWindow* window);
 };

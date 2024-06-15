@@ -146,15 +146,19 @@ Level::~Level() {
         sf::FloatRect playerBounds(player->sprite.getPosition().x, player->sprite.getPosition().y, player->sprite.getGlobalBounds().width, player->sprite.getGlobalBounds().height);
         sf::FloatRect enemyBounds(enemy->positionX, enemy->positionY, enemy->sprite.getGlobalBounds().width, enemy->sprite.getGlobalBounds().height);
 
-        if (playerBounds.intersects(enemyBounds)) {
+        if (playerBounds.intersects(enemyBounds) && fightStarted == false) {
             // Player has touched the enemy, so handle the enemy's interaction
             //player->takeDamage(enemy->damage);
+            fightStarted = true;
 
-            Fight* fight = new Fight(player, enemy);
-            *gamemode = GameModes::FIGHT;
+            fight = new Fight(this, player, enemy, 10);
+            
             fight->startFight();
+            *gamemode = GameModes::FIGHT;
         }
     }
+
+    updateEnemies();
 }
 
 //Player controls
@@ -458,4 +462,14 @@ void Level::animateEnemy(Enemy* enemy, float deltaTime) {
 
     enemy->sprite.setTexture(enemy->texture);
     enemy->sprite.setScale(2.0f, 2.0f);
+}
+
+void Level::updateEnemies()
+{
+    for (int i = 0; i < map->enemies.size(); i++) {
+        if (map->enemies[i]->isDead) {
+            map->enemies.erase(map->enemies.begin() + i);
+            i--; // decrement i to avoid skipping the next enemy
+        }
+    }
 }

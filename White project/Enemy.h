@@ -19,6 +19,7 @@ public:
 	float attackTimer; //Timer to control enemy's attack frequency
 	const float attackDelay = 10.0f; // Delay between attacks (in seconds)
 
+    bool blockDamage = false;
 
 	Enemy();
 
@@ -29,10 +30,24 @@ public:
 
 	void update(float deltaTime);
 	void move(float deltaTime);
-	void attack(float deltaTime);
+	void startAttack(float deltaTime);
 
 	bool canAttack();
 
 	bool reverseDirection();
+
+    void attack(Player* player);
+
+	void block();
+
+	void specialAttack(Player* player);
+
+    //bool canSeeSpecialAttack() {
+    //    return true; // enemy's special attack preparation is visible
+    //}
+
+
+	void takeDamage(int damage);
+
 };
 

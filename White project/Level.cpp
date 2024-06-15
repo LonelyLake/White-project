@@ -14,6 +14,8 @@
 #include "Skeleton.h"
 #include "Goblin.h"
 
+#include "Fight.h"
+
 
 
 enum class Locations;
@@ -144,9 +146,13 @@ Level::~Level() {
         sf::FloatRect playerBounds(player->sprite.getPosition().x, player->sprite.getPosition().y, player->sprite.getGlobalBounds().width, player->sprite.getGlobalBounds().height);
         sf::FloatRect enemyBounds(enemy->positionX, enemy->positionY, enemy->sprite.getGlobalBounds().width, enemy->sprite.getGlobalBounds().height);
 
-        if (playerBounds.intersects(enemyBounds) && enemy->canAttack()) {
+        if (playerBounds.intersects(enemyBounds)) {
             // Player has touched the enemy, so handle the enemy's interaction
-            player->takeDamage(enemy->damage);
+            //player->takeDamage(enemy->damage);
+
+            Fight* fight = new Fight(player, enemy);
+            *gamemode = GameModes::FIGHT;
+            fight->startFight();
         }
     }
 }

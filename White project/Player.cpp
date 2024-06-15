@@ -7,6 +7,7 @@
 #include "Level.h"
 #include "Map.h"
 #include "Item.h"
+#include "Enemy.h"
 
 
 
@@ -25,6 +26,8 @@ Player::Player(Game* game, string name, Texture playerTexture)
 	maxHealth = 10;
 
 	money = 0;
+
+	blockDamage = false;
 
 	//Inventory
 	inventory = new Inventory(this);
@@ -69,6 +72,28 @@ void Player::setPosition(int x, int y) {
 	sprite.setPosition(positionX, positionY);
 }
 
+void Player::attack(Enemy *enemy) {
+	int damage = 2; // default attack damage
+	enemy->takeDamage(damage);
+	cout << "Player attacks enemy for " << damage << " damage!" << endl;
+}
+
+void Player::block() {
+	cout << "Player blocks!" << endl;
+	blockDamage = true; // set block flag
+}
+
+void Player::specialAttack(Enemy* enemy){
+	int damage = 6; // triple attack damage
+	enemy->takeDamage(damage);
+	cout << "Player uses special attack on enemy for " << damage << " damage!" << endl;
+}
+
 void Player::takeDamage(int damage) {
-	health -= damage;
+	if (blockDamage) {
+		damage /= 2; // reduce damage if blocking
+		blockDamage = false; // reset block flag
+	}
+	this->health -= damage;
+	cout << "Player takes " << damage << " damage!" << endl;
 }

@@ -24,6 +24,8 @@ public:
 	//Texture backgroundTexture;
 	//Sprite backgroundSprite;
 
+	Enemy* enemy;
+
 	//Map
 	Map* map;
 	int tileSize;

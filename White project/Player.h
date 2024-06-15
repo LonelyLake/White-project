@@ -24,6 +24,7 @@ public:
 	int health;
 	int maxHealth;;
 	int damage;
+	bool blockDamage;
 
 	float velocity;
 
@@ -70,5 +71,15 @@ public:
 	void setPosition(int x, int y);
 
 	void takeDamage(int damage);
+
+	void attack(Enemy* enemy);
+
+	void block();
+
+	void specialAttack(Enemy* enemy);
+
+	//bool canSeeSpecialAttack() {
+	//	return false; // player cannot see enemy's special attack preparation
+	//}
 
 };

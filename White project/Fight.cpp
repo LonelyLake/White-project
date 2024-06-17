@@ -74,6 +74,10 @@ void Fight::playerTurn() {
 	statusText.setString("Player's turn");
     render(window);
 
+    if(player->health <= 0 || enemy->health <= 0) {
+		return;
+	}
+
     while (true) {
         while (window->pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
@@ -191,8 +195,9 @@ void Fight::update()
         // The fight is over, so we can exit the loop
         cout << "Fight is over!" << endl;
         playerLost = true;
+        return;
     }
-    else if (enemy->health <= 0) {
+    if (enemy->health <= 0) {
         // The fight is over, so we can exit the loop
         cout << "Fight is over!" << endl;
         playerWon = true;
@@ -200,6 +205,7 @@ void Fight::update()
         enemy->isDead = true;
         delete enemy;
         level->fightStarted = false;
+        return;
     }
 
     if (playerTurnActive) {
@@ -209,11 +215,11 @@ void Fight::update()
         actionText.setString("");
     }
     
-    if (player->health > 0) {
+    if (player->health > 0 && enemy->health > 0) {
         playerTurn();
     }
 
-    if (enemy->health > 0) {
+    if (player->health > 0 && enemy->health > 0) {
         enemyTurn();
     }
 

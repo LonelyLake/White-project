@@ -69,6 +69,7 @@ Level::~Level() {
 
       input(deltaTime);
 
+     
 
         // Move player
         sf::FloatRect playerBounds(playerX, playerY, player->sprite.getGlobalBounds().width, player->sprite.getGlobalBounds().height);
@@ -158,7 +159,7 @@ Level::~Level() {
         }
     }
 
-    updateEnemies();
+    
 }
 
 //Player controls
@@ -196,7 +197,9 @@ Level::~Level() {
 			isActiveKey = false;
 		}
         
-
+        /*if (game->gameMode != GameModes::TRAVEL) {
+            return;
+        }*/
         //VICTORY!!!
     }
     
@@ -212,6 +215,7 @@ void Level::renderLevel()
     // Clear the window
     
     // Render the map
+    updateEnemies();
     map->render();
     player->render();
 

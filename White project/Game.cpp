@@ -147,23 +147,34 @@ void Game::update()
 	if (!pause) {
 		//Update player
 
-		player->update();
+		
 		// Update the view's center
 		view.setCenter(player->positionX,  player->positionY);
 
-		player->interface->update(dt);
+
 
 		//Update travel mode
 		switch (gameMode) {
 		case GameModes::TRAVEL:
 			level->update(dt);
+			player->interface->update(dt);
 			break;
 		case GameModes::INVENTORY: 
-			
+			player->interface->update(dt);
 			break;
 		case GameModes::FIGHT:
-			level->fight->update();
-
+			while (level->fightStarted){
+				level->fight->update();
+				if (level->fight->playerLost == true) {
+					gameMode = GameModes::LOSE;
+					break;
+				}
+			}
+			if (!level->fight->playerLost == true) {
+				gameMode = GameModes::TRAVEL;
+			}
+			break;
+		case GameModes::LOSE:
 			break;
 		}
 	}
@@ -215,14 +226,23 @@ void Game::render()
 			view.setSize(600, 400);
 			window->setView(view);
 			level->fight->render(window);
-
-			if (level->fight->playerWon) {
-				gameMode = GameModes::TRAVEL;
-			}
-			else if (level->fight->playerLost) {
-			gameMode = GameModes::DEATH;
-			}
 		}
+		else if (gameMode == GameModes::LOSE) {
+			window->clear();
+			Font font;
+			Text loseText;
+			font.loadFromFile("Fonts/Garton.ttf");
+			loseText.setFont(font);
+			loseText.setCharacterSize(24);
+			loseText.setPosition(50, 300);
+			loseText.setFillColor(Color::Red);
+			loseText.setString("YOU LOSE!");
+
+			window->setView(view);
+			window->draw(loseText);
+		}
+
+}
 
 
 		player->interface->render(window);
@@ -232,7 +252,7 @@ void Game::render()
 		// Display the rendered frame
 		window->display();
 	}
-}
+
 
 void Game::checkGameProcess()
 {

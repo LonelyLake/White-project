@@ -96,7 +96,7 @@ void Player::specialAttack(Enemy* enemy){
 
 void Player::takeDamage(int damage) {
 	if (blockDamage) {
-		damage /= 2; // reduce damage if blocking
+		damage /= 5; // reduce damage if blocking
 		blockDamage = false; // reset block flag
 		shield--;
 	}

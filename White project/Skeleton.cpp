@@ -7,8 +7,8 @@ Skeleton::Skeleton(Level* level, Texture texture, int health, int damage, int sp
 {
 	this->level = level;
 
-	this->health = health;
-	this->damage = damage;
+	this->health = health / 2;
+	this->damage = damage * 1,5;
 	this->speed = speed;
 
 	this->texture = texture;

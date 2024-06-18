@@ -6,8 +6,8 @@
 Goblin::Goblin(Level* level, Texture texture, int health, int damage, int speed)
 {
 	this->level = level;
-	this->health = health;
-	this->damage = 2;
+	this->health = health * 1,5;
+	this->damage = damage / 2;
 	this->speed = speed;
 
 	this->texture = texture;

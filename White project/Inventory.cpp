@@ -79,7 +79,7 @@ void Inventory::render(sf::RenderWindow* window) {
 
     //Increase max health
     increaseMaxHealth.setPosition(player->positionX - 380, player->positionY + 300);
-    increaseMaxHealth.setString("Key 1 - to increase max health, 10 coins. You have: " + to_string(player->maxHealth));
+    increaseMaxHealth.setString("Key 1 - to by health potion (2 hearts), 10 coins. You have: " + to_string(player->maxHealth));
 
     //Increase shield
     increaseShield.setPosition(player->positionX - 380, player->positionY + 350);
@@ -110,9 +110,16 @@ void Inventory::render(sf::RenderWindow* window) {
 
 void Inventory::upgrade() {
     if (Keyboard::isKeyPressed(Keyboard::Num1) && player->money >= 10) {
-        player->maxHealth++;
-        player->money -= 10;
-        isUpgraded = true;
+        if (player->health == player->maxHealth) {
+            player->maxHealth++;
+            player->money -= 10;
+            isUpgraded = true;
+        }
+        else if (player->health < player->maxHealth) {
+            player->health += 2;
+			player->money -= 10;
+			isUpgraded = true;
+		}
     }
     else if (Keyboard::isKeyPressed(Keyboard::Num2) && player->money >= 20) {
         player->shield++;

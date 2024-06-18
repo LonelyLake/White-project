@@ -24,6 +24,8 @@ void Key::takeItem(Player* player)
 	player->hasKey = true;
 	player->inventory->addItem(this);
 	cout << "Player took key" << endl;
+
+	//player->velocity *= 2;
 }
 
 void Key::useItem(Player* player)
@@ -32,5 +34,6 @@ void Key::useItem(Player* player)
 	used = true;
 
 	cout << "Player used key" << endl;
+	//player->velocity /= 2;
 }
 

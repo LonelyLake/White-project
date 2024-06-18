@@ -255,16 +255,26 @@ void Level::addEnemies(int enemiesAmount)
 {
     mapEnemies.resize(enemiesAmount);
 
-    //Coin
-     //???
-    skeletonTexture.loadFromFile("Images/Enemies/Skeleton enemy.png", IntRect(0, 0, 60, 40));
-    Skeleton* skeleton = new Skeleton(this, skeletonTexture, 10, 1, 1);
+    //Enemies parametres
+    int health = 10;
+    int damage = 2;
+    int speed = 1;
 
+	if (location == Locations::CASTLE_MIDDLE) {
+        health = 15;
+        damage = 3;
+    }
+    else if (location == Locations::CASTLE_STAIRS) {
+        health = 20;
+        damage = 4;
+    }
+
+    skeletonTexture.loadFromFile("Images/Enemies/Skeleton enemy.png", IntRect(0, 0, 60, 40));
+    Skeleton* skeleton = new Skeleton(this, skeletonTexture, health, damage, speed);
     mapEnemies[0] = skeleton;
 
     goblinTexture.loadFromFile("Images/Enemies/Bringer-of-Death_Idle_1.png", IntRect(80, 40, 120, 97));
-    Goblin* goblin = new Goblin(this, goblinTexture, 10, 1, 1);
-	
+    Goblin* goblin = new Goblin(this, goblinTexture, health, damage, speed);
 
     mapEnemies[1] = goblin;
 

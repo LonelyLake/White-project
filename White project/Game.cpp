@@ -20,6 +20,7 @@ void Game::initVariables()
 	//Init player
 	playerTexture.loadFromFile("Images/AnimationSheet_Character.png", IntRect(0, 0, 32, 32));
 	player = new Player(this, "Knight", playerTexture);
+	player->velocity = 600;
 
 	// Initialize the view with the window's size
 	view.setSize(window->getSize().x, window->getSize().y);
@@ -182,18 +183,18 @@ void Game::update()
 			break;
 		}
 	}
-
+	view.setSize(window->getSize().x, window->getSize().y);
 	//Set editor mode - TEST!!!!!!!!!!!!!!
 	if (editorMode) {
-		view.setSize(window->getSize().x * 8, window->getSize().y * 8);
+		//view.setSize(window->getSize().x * 8, window->getSize().y * 8);
 		player->hasKey = true;
 		player->damage = 1000;
 		player->health = 1000;
 	}
-	else {
+	/*else {
 		view.setSize(window->getSize().x, window->getSize().y);
 		player->velocity = 400.f;
-	}
+	}*/
 
 	
 
@@ -247,6 +248,20 @@ void Game::render()
 			window->setView(view);
 			window->draw(loseText);
 		}
+		else if (gameMode == GameModes::WIN) {
+			window->clear();
+			Font font;
+			Text loseText;
+			font.loadFromFile("Fonts/Garton.ttf");
+			loseText.setFont(font);
+			loseText.setCharacterSize(40);
+			loseText.setPosition(player->positionX - 100, player->positionY);
+			loseText.setFillColor(Color::Red);
+			loseText.setString("YOU WIN!");
+
+			window->setView(view);
+			window->draw(loseText);
+		}
 
 }
 
@@ -273,6 +288,11 @@ void Game::checkGameProcess()
 		location = Locations::CASTLE_STAIRS;
 		currentLevel = 0;
 		cout << "New location! " << endl;
+	}
+	if (currentLevel == 2 && location == Locations::CASTLE_STAIRS) {
+		gameMode = GameModes::WIN;
+
+		cout << "You won! " << endl;
 	}
 
 	if(levelCompleted) {

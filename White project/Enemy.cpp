@@ -134,7 +134,7 @@ void Enemy::specialAttack(Player* player) {
 
 void Enemy::takeDamage(int damage) {
     if (blockDamage) {
-        damage /= 2; // reduce damage if blocking
+        damage /= 3; // reduce damage if blocking
         blockDamage = false; // reset block flag
     }
     this->health -= damage;

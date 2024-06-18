@@ -121,7 +121,7 @@ void Inventory::upgrade() {
     }
     else if (Keyboard::isKeyPressed(Keyboard::Num3) && player->money >= 30) {
         player->energy++;
-        player->money -= 3k0;
+        player->money -= 30;
         isUpgraded = true;
     }
 }

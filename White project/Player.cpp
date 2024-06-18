@@ -54,7 +54,8 @@ Player::Player(Game* game, string name, Texture playerTexture)
 }
 
 Player::~Player() {
-	
+	delete interface;
+	delete inventory;
 }
 
 void Player::update() {

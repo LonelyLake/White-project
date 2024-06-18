@@ -13,7 +13,7 @@ void Game::initVariables()
 	//Music
 	music.openFromFile("Music/Pixel 5.ogg");
 	music.setLoop(true);
-	music.setVolume(10);
+	music.setVolume(0); //*****
 	music.play();
 
 
@@ -85,9 +85,12 @@ void Game::pollEvents() {
 
 		case Event::KeyPressed:
 
+			if (event.key.code == Keyboard::Escape) {
+				window->close();
+			}
 		//Game pause
 			if (!menu) {
-				if (event.key.code == Keyboard::Escape) {
+				if (event.key.code == Keyboard::P) {
 					if (!pause) {
 						pause = true;
 					}
@@ -171,6 +174,7 @@ void Game::update()
 				}
 			}
 			if (!level->fight->playerLost == true) {
+				delete level->fight;
 				gameMode = GameModes::TRAVEL;
 			}
 			break;
@@ -267,6 +271,7 @@ void Game::checkGameProcess()
 
 	if (currentLevel == 2 && location == Locations::CASTLE_MIDDLE) {
 		location = Locations::CASTLE_STAIRS;
+		currentLevel = 0;
 		cout << "New location! " << endl;
 	}
 

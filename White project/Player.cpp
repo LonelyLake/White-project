@@ -97,7 +97,9 @@ void Player::takeDamage(int damage) {
 	if (blockDamage) {
 		damage /= 2; // reduce damage if blocking
 		blockDamage = false; // reset block flag
+		shield--;
 	}
 	this->health -= damage;
+
 	cout << "Player takes " << damage << " damage!" << endl;
 }

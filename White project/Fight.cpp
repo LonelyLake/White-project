@@ -97,7 +97,8 @@ void Fight::playerTurn() {
                 }
                 else if (event.key.code == sf::Keyboard::Num2 && player->shield > 0) {
                     player->block();
-                    player->shield--;
+                    enemy->blockDamage = false;
+                    //player->shield--;
 
                     actionText.setString("Player blocks");
                     render(window); // Update the actionText
@@ -150,6 +151,7 @@ void Fight::enemyTurn() {
         break;
     case 1:
         enemy->block();
+        player->blockDamage = false;
         //sf::sleep(sf::seconds(2)); // add 2-second delay
 
         actionText.setString("Enemy blocks");

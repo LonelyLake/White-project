@@ -16,7 +16,7 @@ Fight::Fight(Level* level, Player* player, Enemy* enemy, int maxTurns)
 
 void Fight::startFight()
 {
-    playerTexture = player->texture;
+    playerTexture.loadFromFile("Images/AnimationSheet_Character.png", IntRect(0, 0, 32, 32));
     playerSprite.setTexture(playerTexture);
     playerSprite.setPosition(100, 100);
 
@@ -95,8 +95,9 @@ void Fight::playerTurn() {
 
                     return;
                 }
-                else if (event.key.code == sf::Keyboard::Num2) {
+                else if (event.key.code == sf::Keyboard::Num2 && player->shield > 0) {
                     player->block();
+                    player->shield--;
 
                     actionText.setString("Player blocks");
                     render(window); // Update the actionText
@@ -105,8 +106,9 @@ void Fight::playerTurn() {
 
                     return;
                 }
-                else if (event.key.code == sf::Keyboard::Num3) {
+                else if (event.key.code == sf::Keyboard::Num3 && player->energy > 0) {
                     player->specialAttack(enemy);
+                    player->energy--;
 
                     actionText.setString("Player uses special attack");
                     render(window); // Update the actionText

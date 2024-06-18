@@ -98,13 +98,13 @@ void Enemy::update(float deltaTime) {
         }
     }
 
-bool Enemy::canAttack() {
-    if (attackTimer >= attackDelay) {
-        attackTimer = 0.0f; // Reset the timer
-        return true; // Enemy can attack
-    }
-    return false; // Enemy cannot attack yet
-}
+//bool Enemy::canAttack() {
+//    if (attackTimer >= attackDelay) {
+//        attackTimer = 0.0f; // Reset the timer
+//        return true; // Enemy can attack
+//    }
+//    return false; // Enemy cannot attack yet
+//}
 
 bool Enemy::reverseDirection() {
     if(direction == 'l') {

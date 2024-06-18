@@ -334,6 +334,13 @@ void Map::loadTileTextures() {
 	wallSprite.setTexture(wallTexture);
 	wallSprite.setScale(tileScale, tileScale);
 
+	if (level->location == Locations::CASTLE_MIDDLE) {
+		wallSprite.setColor(Color::Red);
+	}
+	if (level->location == Locations::CASTLE_STAIRS) {
+		wallSprite.setColor(Color::Green);
+	}
+
 	emptyTexture.loadFromFile("Images/Map/Tiles/Floor.png", IntRect(0, 0, 20, 20));
 	emptySprite.setTexture(emptyTexture);
 	emptySprite.setScale(tileScale, tileScale);

@@ -25,7 +25,8 @@ Player::Player(Game* game, string name, Texture playerTexture)
 	health = 8;
 	maxHealth = 10;
 	damage = 3;
-
+	shield = 3;
+	energy = 1;
 
 	money = 0;
 

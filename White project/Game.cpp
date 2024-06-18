@@ -119,7 +119,7 @@ void Game::pollEvents() {
 			}
 
 			//Menu
-			if (event.key.code == Keyboard::M) {
+			/*if (event.key.code == Keyboard::M) {
 				if (!editorMode) {
 					menu = true;
 				}
@@ -127,7 +127,7 @@ void Game::pollEvents() {
 					menu = false;
 				}
 			}
-			break;
+			break;*/
 		}
 	}
 }
@@ -167,7 +167,7 @@ void Game::update()
 				level->fight->update();
 				if (level->fight->playerLost == true) {
 					gameMode = GameModes::LOSE;
-					break;
+					level->fightStarted = false;
 				}
 			}
 			if (!level->fight->playerLost == true) {
@@ -182,7 +182,9 @@ void Game::update()
 	//Set editor mode - TEST!!!!!!!!!!!!!!
 	if (editorMode) {
 		view.setSize(window->getSize().x * 8, window->getSize().y * 8);
-		player->velocity = 1000.f;
+		player->hasKey = true;
+		player->damage = 1000;
+		player->health = 1000;
 	}
 	else {
 		view.setSize(window->getSize().x, window->getSize().y);
@@ -233,8 +235,8 @@ void Game::render()
 			Text loseText;
 			font.loadFromFile("Fonts/Garton.ttf");
 			loseText.setFont(font);
-			loseText.setCharacterSize(24);
-			loseText.setPosition(50, 300);
+			loseText.setCharacterSize(40);
+			loseText.setPosition(player->positionX - 100, player->positionY);
 			loseText.setFillColor(Color::Red);
 			loseText.setString("YOU LOSE!");
 
@@ -257,8 +259,14 @@ void Game::render()
 void Game::checkGameProcess()
 {
 
-	if (currentLevel == 4 && location == Locations::CASTLE_HALL) {
+	if (currentLevel == 2 && location == Locations::CASTLE_HALL) {
 		location = Locations::CASTLE_MIDDLE;
+		currentLevel = 0;
+		cout << "New location! " << endl;
+	}
+
+	if (currentLevel == 2 && location == Locations::CASTLE_MIDDLE) {
+		location = Locations::CASTLE_STAIRS;
 		cout << "New location! " << endl;
 	}
 

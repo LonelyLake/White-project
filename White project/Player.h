@@ -25,6 +25,8 @@ public:
 	int maxHealth;;
 	int damage;
 	bool blockDamage;
+	int shield;
+	int energy;
 
 	float velocity;
 
